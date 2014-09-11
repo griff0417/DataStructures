@@ -1,0 +1,11 @@
+0 = Rock
+1 = Paper
+2 = Scissors
+
+Rock vs Paper = Paper		1 > 0
+Rock vs Scissors = Rock		0 > 2
+Paper vs Scissors = Scissors	2 > 1
+
+Rock vs Rock = Tie
+Paper vs Paper = Tie
+Scissors vs Scissors = Tie
