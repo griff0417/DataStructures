@@ -50,7 +50,8 @@ public class RockPaperScissors
 		{
 			// Output the game's greeting message
 			System.out.println("Welcome to Rock Paper Scissors!");
-			System.out.println("Input your choice: 0 = Rock, 1 = Paper, 2 = Scissors.  Then press 'Enter'.");
+			System.out.println("Input your choice: 0 = Rock, 1 = Paper, " + 
+			"2 = Scissors, exit = quit the game.  Then press 'Enter'.");
 			
 			try 
 			{
@@ -213,6 +214,35 @@ public class RockPaperScissors
 			}
 			
 			System.out.println("\n");
+			
+			// Output the game's greeting message
+			System.out.println("Play again?  yes or no.");
+			
+			try 
+			{
+				// Wait for console input, then set 
+				// the input to playerChoiceStr
+				playerChoiceStr = bufRead.readLine();
+			} 
+			catch (IOException e) 
+			{
+				e.printStackTrace();
+			}
+			
+			if (playerChoiceStr.equals("yes"))
+			{
+				
+			}
+			else if (playerChoiceStr.equals("no"))
+			{
+				System.out.println("Goodbye!");
+				gameRunning = false;
+				System.exit(0);
+			}
+			else
+			{
+				
+			}
 		}
 	}
 	
