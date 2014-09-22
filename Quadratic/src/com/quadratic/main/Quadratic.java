@@ -10,19 +10,57 @@ public class Quadratic
 	private double coefB;
 	private double coefC;
 	
+	/**
+	 * Default 
+	 */
 	public Quadratic(){
 		coefA=0;
 		coefB=0;
 		coefC=0;
 	}
 	
+	/**
+	 * 
+	 * @param coefA
+	 * @param coefB
+	 * @param coefC
+	 */
 	public Quadratic(double coefA, double coefB, double coefC){
 		this.coefA=coefA;
 		this.coefB=coefB;
 		this.coefC=coefC;
 		
 	}
-
+	/**
+	 * 
+	 * @param rootNum
+	 * @return rootNum
+	 */
+	public double getRootNum(double rootNum){
+		
+		return rootNum;
+	}
+	
+	/**
+	 * 
+	 * @param rootOne
+	 * @return rootOne
+	 */
+	public double getRootOne(double rootOne){
+		
+		return rootOne;
+	}
+	
+	/**
+	 * 
+	 * @param rootTwo
+	 * @return rootTwo
+	 */
+	public double getRootTwo(double rootTwo){
+		
+		return rootTwo;
+	}
+	
 	/**
 	 * @return the coefA
 	 */
