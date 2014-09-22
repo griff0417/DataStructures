@@ -1,35 +1,45 @@
 package com.quadratic.main;
+
 /**
+ * An object to represent a basic quadratic
+ * polynomial.  Contains information on
+ * the quadratic's coefficients and has
+ * methods to obtain the sum and roots
+ * of a quadratic.
+ * 
+ * Date: 9-22-14
  * 
  * @author Jason Griffith & Ryan Hochmuth
  *
  */
 public class Quadratic implements Cloneable
 {
+	// The coefficients of this quadratic
 	private double coefA;
 	private double coefB;
 	private double coefC;
 	
 	/**
-	 * Default 
+	 * Default Constructor
 	 */
-	public Quadratic(){
-		coefA=0;
-		coefB=0;
-		coefC=0;
+	public Quadratic()
+	{
+		this.coefA = 0;
+		this.coefB = 0;
+		this.coefC = 0;
 	}
 	
 	/**
-	 * 
+	 * Creates a new Quadratic with set coefficients.
 	 * @param coefA
 	 * @param coefB
 	 * @param coefC
 	 */
-	public Quadratic(double coefA, double coefB, double coefC){
-		this.coefA=coefA;
-		this.coefB=coefB;
-		this.coefC=coefC;
-		
+	public Quadratic(double coefA, double coefB, double coefC)
+	{
+		this.coefA = coefA;
+		this.coefB = coefB;
+		this.coefC = coefC;
 	}
 	
 	/**
@@ -38,11 +48,8 @@ public class Quadratic implements Cloneable
 	 * @param q2
 	 * @return
 	 */
-	public static Quadratic sum(Quadratic q1, Quadratic q2){
-		
-		
-		
-		
+	public static Quadratic sum(Quadratic q1, Quadratic q2)
+	{
 		/*
 		 * Postcondition: The return value is the quadratic 
 		 * expression obtained by adding q1 and q2. For 
@@ -50,6 +57,7 @@ public class Quadratic implements Cloneable
 		 * is the sum of q1's c coefficient and q2's c 
 		 * coefficient
 		 */
+		
 		return null;
 	}
 	
