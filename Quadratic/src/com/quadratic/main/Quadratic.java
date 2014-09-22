@@ -31,6 +31,46 @@ public class Quadratic
 		this.coefC=coefC;
 		
 	}
+	
+	/**
+	 * 
+	 * @param q1
+	 * @param q2
+	 * @return
+	 */
+	public static Quadratic sum(Quadratic q1, Quadratic q2){
+		
+		
+		
+		
+		/*
+		 * Postcondition: The return value is the quadratic 
+		 * expression obtained by adding q1 and q2. For 
+		 * example, the c coefficient of the return value
+		 * is the sum of q1's c coefficient and q2's c 
+		 * coefficient
+		 */
+		return null;
+	}
+	
+	/**
+	 * 
+	 * @param r
+	 * @param q
+	 * @return
+	 */
+	public static Quadratic scale(double r, Quadratic q){
+		
+		
+		
+		/*
+		 * Postcondition: The return value is the quadratic
+		 * expression obtained by multiplying each of q's
+		 * coefficients by the number r.
+		 */
+		return null;
+	}
+	
 	/**
 	 * 
 	 * @param rootNum
