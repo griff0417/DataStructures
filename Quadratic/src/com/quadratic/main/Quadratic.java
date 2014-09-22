@@ -4,7 +4,7 @@ package com.quadratic.main;
  * @author Jason Griffith & Ryan Hochmuth
  *
  */
-public class Quadratic 
+public class Quadratic implements Cloneable
 {
 	private double coefA;
 	private double coefB;
@@ -99,6 +99,39 @@ public class Quadratic
 	public double getRootTwo(double rootTwo){
 		
 		return rootTwo;
+	}
+	
+	/**
+	 * Checks to see if the given Object
+	 * is of type Quadratic.
+	 */
+	public boolean equals(Object obj)
+	{
+		if (obj instanceof Quadratic)
+			return true;
+		else
+			return false;
+	}
+	
+	/**
+	 * Creates a clone of the given Quadratic.
+	 * @param quad - The Quadratic to clone
+	 * @return clone - The new cloned Quadratic
+	 */
+	public Quadratic clone(Quadratic quad)
+	{
+		Quadratic clone = null;
+		
+		try 
+		{
+			clone = (Quadratic)quad.clone();
+		} 
+		catch (CloneNotSupportedException e) 
+		{
+			e.printStackTrace();
+		}
+		
+		return clone;
 	}
 	
 	/**
