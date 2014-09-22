@@ -1,5 +1,9 @@
 package com.quadratic.main;
-
+/**
+ * 
+ * @author Jason Griffith & Ryan Hochmuth
+ *
+ */
 public class Quadratic 
 {
 	private double coefA;
@@ -60,5 +64,6 @@ public class Quadratic
 	public void setCoefC(double coefC) {
 		this.coefC = coefC;
 	}
+
 	
 }
