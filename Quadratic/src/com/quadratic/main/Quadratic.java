@@ -11,6 +11,7 @@ package com.quadratic.main;
  * 
  * @author Jason Griffith & Ryan Hochmuth
  *
+ *
  */
 public class Quadratic implements Cloneable
 {

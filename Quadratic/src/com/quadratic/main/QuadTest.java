@@ -29,6 +29,7 @@ public class QuadTest
 	}
 	
 	/**
+	 * 
 	 * Does the required calculation, 
 	 * creates a clone of the first quadratic,
 	 * checks if they are aliases, then checks 

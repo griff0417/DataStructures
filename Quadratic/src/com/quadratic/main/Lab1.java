@@ -30,6 +30,7 @@ public class Lab1
 	 */
 	private static void init()
 	{
+		
 		// Attempt to create the scanner by finding the input File
 		try 
 		{
