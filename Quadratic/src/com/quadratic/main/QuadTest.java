@@ -84,6 +84,10 @@ public class QuadTest
 		}
 		for(int x = 0; x < 8; x++)
 		{
+			switch (x){
+				case 0:
+					quad1.setCoefA((double)
+			}
 			tokenList.add(tokens[x]);
 		
 		}
