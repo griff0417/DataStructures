@@ -44,25 +44,28 @@ public class QuadTest
 	 */
 	public static void calculations()
 	{
-		while (true)
+		
+		quad3 = Quadratic.sum(quad1,quad2);
+		
+		while (true) //for print testing  TO BE REMOVED
 		{
-			if (done)
+			if (done)//for print testing  TO BE REMOVED
 			{
-				for (int x = 0; x < tokenList.size() / 8; x++)
+				for (int x = 0; x < tokenList.size() / 8; x++)//for print testing  TO BE REMOVED
 				{
 					
-					System.out.println(tokenList.get((x * 8)) + " " +
-									   tokenList.get((x * 8) + 1) + " " +
-									   tokenList.get((x * 8) + 2) + " " +
-									   tokenList.get((x * 8) + 3) + " " +
-									   tokenList.get((x * 8) + 4) + " " +
-									   tokenList.get((x * 8) + 5) + " " +
-									   tokenList.get((x * 8) + 6) + " " +
+					System.out.println(tokenList.get((x * 8)) + " " +//for print testing  TO BE REMOVED
+									   tokenList.get((x * 8) + 1) + " " +//for print testing  TO BE REMOVED
+									   tokenList.get((x * 8) + 2) + " " +//for print testing  TO BE REMOVED
+									   tokenList.get((x * 8) + 3) + " " +//for print testing  TO BE REMOVED
+									   tokenList.get((x * 8) + 4) + " " +//for print testing  TO BE REMOVED
+									   tokenList.get((x * 8) + 5) + " " +//for print testing  TO BE REMOVED
+									   tokenList.get((x * 8) + 6) + " " +//for print testing  TO BE REMOVED
 									   tokenList.get((x * 8) + 7));
 					
 				}
 				
-				done = false;
+				done = false;//for print testing  TO BE REMOVED
 			}
 		}
 	}
@@ -74,23 +77,18 @@ public class QuadTest
 	 */
 	public static void parse(String line)
 	{
-		String[] tokens = line.split("\\s+");
+		String[] tokens = line.split("\\s+"); //Splits line by consecutive tokens " "
 		
+		if (tokens.length<8){ //Returns before recording bad entries in List
+			return;
+		}
 		for(int x = 0; x < 8; x++)
 		{
-			for(int y = 0; y < tokens.length && x < tokens.length; y++)
-			{
-				tokenList.add(tokens[y]);
-				x++;
-			}
-			
-			if (x < 8 && x != 0)
-			{
-				tokenList.add("x");
-			}
-		}
+			tokenList.add(tokens[x]);
 		
-		done = true;
+		}
+
+		done = true;//for print testing  TO BE REMOVED
 	}
 	
 	/**
