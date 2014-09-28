@@ -1,5 +1,8 @@
 package com.quadratic.main;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A class used to test the
  * functionality of the Quadratic class.
@@ -14,11 +17,11 @@ public class QuadTest
 	/***********************
 	 * Quadratics
 	 **********************/
-	Quadratic quad1;
-	Quadratic quad2;
+	private static Quadratic quad1;
+	private static Quadratic quad2;
 	// quad3 is the sum of quad1 and quad2
-	Quadratic quad3;
-	
+	private static Quadratic quad3;
+	private static List<String> tokenList = new ArrayList<String>();
 	/**
 	 * Gives a description of what
 	 * the program is doing.
@@ -52,8 +55,25 @@ public class QuadTest
 	 */
 	public static void parse(String line)
 	{
-		System.out.println(line);
+		String delims = "\\s+";
+		String[] tokens = line.split(delims);
+			
+		
+		for (int i = 0; i < tokens.length; i++)
+			//System.out.println(tokens[i]);
+			tokenList.add(tokens[i]);
+			
+		if (tokens.length%8>0){
+			for (int j=0; j<=(tokens.length/8); j++){
+				tokenList.add("X");
+			}
+		}
+		
+		for (int k=0; k<tokenList.size();k++)
+			System.out.println(tokenList.get(k));
+		
 	}
+	
 	
 	/**
 	 * Create the output of information
