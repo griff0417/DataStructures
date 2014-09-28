@@ -57,6 +57,6 @@ public class Lab1
 			QuadTest.parse(scanner.nextLine());
 		}
 		
-		QuadTest.calculations();
+		
 	}
 }
