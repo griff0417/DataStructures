@@ -1,5 +1,8 @@
 package com.quadratic.main;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A class used to test the
  * functionality of the Quadratic class.
@@ -14,10 +17,14 @@ public class QuadTest
 	/***********************
 	 * Quadratics
 	 **********************/
-	Quadratic quad1;
-	Quadratic quad2;
+	private static Quadratic quad1;
+	private static Quadratic quad2;
 	// quad3 is the sum of quad1 and quad2
-	Quadratic quad3;
+	private static Quadratic quad3;
+	
+	private static List<String> tokenList = new ArrayList<String>();
+	
+	private static boolean done = false;
 	
 	/**
 	 * Gives a description of what
@@ -35,14 +42,29 @@ public class QuadTest
 	 * checks if they are aliases, then checks 
 	 * if the two quadratics have the same coefficients. 
 	 */
-	public static void  calculations()
+	public static void calculations()
 	{
-		//double a = Quadratic.getCoefA();
-		//double b = Quadratic.getCoefB();
-		//double c = Quadratic.getCoefC();
-		
-		//double quadPlusResult = (-b + (Math.sqrt((b*b - ((4 * a * c))))))/ (2 * a);
-		//double quadNegResult = (-b - (Math.sqrt((b*b - ((4 * a * c))))))/ (2 * a);
+		while (true)
+		{
+			if (done)
+			{
+				for (int x = 0; x < tokenList.size() / 8; x++)
+				{
+					
+					System.out.println(tokenList.get((x * 8)) + " " +
+									   tokenList.get((x * 8) + 1) + " " +
+									   tokenList.get((x * 8) + 2) + " " +
+									   tokenList.get((x * 8) + 3) + " " +
+									   tokenList.get((x * 8) + 4) + " " +
+									   tokenList.get((x * 8) + 5) + " " +
+									   tokenList.get((x * 8) + 6) + " " +
+									   tokenList.get((x * 8) + 7));
+					
+				}
+				
+				done = false;
+			}
+		}
 	}
 	
 	/**
@@ -52,7 +74,23 @@ public class QuadTest
 	 */
 	public static void parse(String line)
 	{
-		System.out.println(line);
+		String[] tokens = line.split("\\s+");
+		
+		for(int x = 0; x < 8; x++)
+		{
+			for(int y = 0; y < tokens.length && x < tokens.length; y++)
+			{
+				tokenList.add(tokens[y]);
+				x++;
+			}
+			
+			if (x < 8 && x != 0)
+			{
+				tokenList.add("x");
+			}
+		}
+		
+		done = true;
 	}
 	
 	/**

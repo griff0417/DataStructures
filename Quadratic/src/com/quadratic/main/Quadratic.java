@@ -44,70 +44,64 @@ public class Quadratic implements Cloneable
 	}
 	
 	/**
-	 * 
-	 * @param q1
-	 * @param q2
-	 * @return
+	 * Evaluate this quadratic with the
+	 * given value of x.
+	 * @param x - the value of x
+	 * @return int - the evaluated answer
+	 */
+	public double evalExpression(double x)
+	{
+		return (coefA * Math.pow(x, 2)) + (coefB * x) + coefC;
+	}
+	
+	/**
+	 * Add the two given quadratics together.
+	 * @param q1 - the first quadratic
+	 * @param q2 - the second quadratic
+	 * @return Quadratic - the result of q1 + q2
 	 */
 	public static Quadratic sum(Quadratic q1, Quadratic q2)
 	{
-		/*
-		 * Postcondition: The return value is the quadratic 
-		 * expression obtained by adding q1 and q2. For 
-		 * example, the c coefficient of the return value
-		 * is the sum of q1's c coefficient and q2's c 
-		 * coefficient
-		 */
-		
-		return null;
+		return new Quadratic(q1.getCoefA() + q2.getCoefA(), q1.getCoefB() + q2.getCoefB(), q1.getCoefC() + q2.getCoefC());
 	}
 	
 	/**
-	 * 
-	 * @param r
-	 * @param q
-	 * @return
+	 * Scale the given quadratic by the given number.
+	 * @param mult - the multiplier to scale by
+	 * @param q - the quadratic to scale
+	 * @return Quadratic -  the scaled quadratic
 	 */
-	public static Quadratic scale(double r, Quadratic q){
-		
-		
-		
-		/*
-		 * Postcondition: The return value is the quadratic
-		 * expression obtained by multiplying each of q's
-		 * coefficients by the number r.
-		 */
-		return null;
+	public static Quadratic scale(double mult, Quadratic q)
+	{
+		return new Quadratic(q.getCoefA() * mult, q.getCoefB() * mult, q.getCoefC() * mult);
 	}
 	
 	/**
-	 * 
+	 * Get how many real roots this quadratic has.
 	 * @param rootNum
 	 * @return rootNum
 	 */
-	public double getRootNum(double rootNum){
-		
-		return rootNum;
+	public double getRootNum()
+	{
+		return 0;
 	}
 	
 	/**
-	 * 
-	 * @param rootOne
+	 * Get the first root of this quadratic. 
 	 * @return rootOne
 	 */
-	public double getRootOne(double rootOne){
-		
-		return rootOne;
+	public double getRootOne()
+	{
+		return (-coefB + (Math.sqrt((coefB * coefB - ((4 * coefA * coefC)))))) / (2 * coefA);
 	}
 	
 	/**
-	 * 
-	 * @param rootTwo
+	 * Get the second root of this quadratic.
 	 * @return rootTwo
 	 */
-	public double getRootTwo(double rootTwo){
-		
-		return rootTwo;
+	public double getRootTwo()
+	{
+		return (-coefB - (Math.sqrt((coefB * coefB - ((4 * coefA * coefC)))))) / (2 * coefA);
 	}
 	
 	/**
@@ -146,44 +140,48 @@ public class Quadratic implements Cloneable
 	/**
 	 * @return the coefA
 	 */
-	public double getCoefA() {
+	public double getCoefA() 
+	{
 		return coefA;
 	}
 
 	/**
 	 * @param coefA the coefA to set
 	 */
-	public void setCoefA(double coefA) {
+	public void setCoefA(double coefA) 
+	{
 		this.coefA = coefA;
 	}
 
 	/**
 	 * @return the coefB
 	 */
-	public double getCoefB() {
+	public double getCoefB() 
+	{
 		return coefB;
 	}
 
 	/**
 	 * @param coefB the coefB to set
 	 */
-	public void setCoefB(double coefB) {
+	public void setCoefB(double coefB) 
+	{
 		this.coefB = coefB;
 	}
 
 	/**
 	 * @return the coefC
 	 */
-	public double getCoefC() {
+	public double getCoefC() 
+	{
 		return coefC;
 	}
 
 	/**
 	 * @param coefC the coefC to set
 	 */
-	public void setCoefC(double coefC) {
+	public void setCoefC(double coefC) 
+	{
 		this.coefC = coefC;
 	}
-
-	
 }
