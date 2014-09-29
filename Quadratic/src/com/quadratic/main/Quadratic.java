@@ -69,7 +69,7 @@ public class Quadratic implements Cloneable
 	 * Scale the given quadratic by the given number.
 	 * @param mult - the multiplier to scale by
 	 * @param q - the quadratic to scale
-	 * @return Quadratic -  the scaled quadratic
+	 * @return Quadratic - the scaled quadratic
 	 */
 	public static Quadratic scale(double mult, Quadratic q)
 	{
@@ -78,30 +78,92 @@ public class Quadratic implements Cloneable
 	
 	/**
 	 * Get how many real roots this quadratic has.
-	 * @param rootNum
-	 * @return rootNum
+	 * @return int - the number of roots this quadratic has
 	 */
 	public double getRootNum()
 	{
-		return 0;
+		
+		if (coefA == 0 && coefB == 0 && coefC == 0)
+			return 3;
+		else if (coefA == 0 && coefB == 0 && coefC != 0)
+			return 0;
+		else if (coefA == 0 && coefB != 0)
+			return 1;
+		else if (coefA != 0 && Math.pow(coefB, 2) < 4 * coefA * coefC)
+			return 0;
+		else if (coefA != 0 && Math.pow(coefB, 2) == 4 * coefA * coefC)
+			return 1;
+		else if (coefA != 0 && Math.pow(coefB, 2) > 4 * coefA * coefC)
+			return 2;
+		else
+			return 0;
 	}
 	
 	/**
-	 * Get the first root of this quadratic. 
-	 * @return rootOne
+	 * Get the first root of this quadratic.
+	 * @return int - the first root
 	 */
 	public double getRootOne()
 	{
-		return (-coefB + (Math.sqrt((coefB * coefB - ((4 * coefA * coefC)))))) / (2 * coefA);
+		double posRoot = (-coefB + (Math.sqrt((coefB * coefB - ((4 * coefA * coefC)))))) / (2 * coefA);
+		double negRoot = (-coefB - (Math.sqrt((coefB * coefB - ((4 * coefA * coefC)))))) / (2 * coefA);
+		
+		if (getRootNum() > 0)
+		{
+			if (posRoot < negRoot)
+				return posRoot;
+			else
+				return negRoot;
+		}
+		else
+			return 0;
 	}
 	
 	/**
-	 * Get the second root of this quadratic.
-	 * @return rootTwo
+	 * Get the second root of this quadratic. 
+	 * @return int - the second root
 	 */
 	public double getRootTwo()
 	{
-		return (-coefB - (Math.sqrt((coefB * coefB - ((4 * coefA * coefC)))))) / (2 * coefA);
+		double posRoot = (-coefB + (Math.sqrt((coefB * coefB - ((4 * coefA * coefC)))))) / (2 * coefA);
+		double negRoot = (-coefB - (Math.sqrt((coefB * coefB - ((4 * coefA * coefC)))))) / (2 * coefA);
+		
+		if (getRootNum() > 0)
+		{
+			if (posRoot > negRoot)
+				return posRoot;
+			else
+				return negRoot;
+		}
+		else
+			return 0; 
+	}
+	
+	/**
+	 * Returns the String equivalent
+	 * of this quadratic.
+	 * @return String - the quadratic as a String
+	 */
+	public String toString()
+	{
+		if (coefB > 0)
+		{
+			if (coefC > 0)
+				return (int)coefA + "x^2 + " + (int)coefB + "x + " + (int)coefC;
+			else
+				return (int)coefA + "x^2 + " + (int)coefB + "x - " + (int)coefC * -1;
+		}
+		else if (coefB < 0)
+		{
+			if (coefC > 0)
+				return (int)coefA + "x^2 - " + (int)coefB * -1 + "x + " + (int)coefC;
+			else
+				return (int)coefA + "x^2 - " + (int)coefB * -1 + "x - " + (int)coefC * -1;
+		}
+		else
+		{
+			return "0";
+		}
 	}
 	
 	/**

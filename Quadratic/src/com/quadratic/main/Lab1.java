@@ -30,7 +30,6 @@ public class Lab1
 	 */
 	private static void init()
 	{
-		
 		// Attempt to create the scanner by finding the input File
 		try 
 		{
@@ -50,6 +49,8 @@ public class Lab1
 	{
 		init(); // Run the init method
 		
+		QuadTest.intro();
+		
 		// Read through the input file while
 		// there is still information in it
 		while(scanner.hasNextLine())
@@ -57,6 +58,6 @@ public class Lab1
 			QuadTest.parse(scanner.nextLine());
 		}
 		
-		QuadTest.calculations();
+		QuadTest.output();
 	}
 }
