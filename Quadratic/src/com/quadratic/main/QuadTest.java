@@ -64,15 +64,36 @@ public class QuadTest
 					+ "The value of the first quadratic expression when x = " + xVal + " is: " + (int)quad1.evalExpression(xVal)
 					+ "\n\n"
 					+ "The first quadratic after scaling with a multiplier of " + scale + " is: " + Quadratic.scale(scale, quad1).toString()
-					+ "\n\n"
-					+ "The number of roots for the first quadratic is: " + (int)quad1.getRootNum()
+					+ "\n\n";
+					 
+			switch ((int)quad1.getRootNum()){
+				
+				case 0:
+					output += "The number of roots for the first quadratic is: 0";
+					break;
+					
+				case 1:
+					output += "The number of roots for the first quadratic is: "+(int)quad1.getRootNum()
+					+ "\nThe value of the root is: "
 					+ "\n"
-					+ "The values of those roots are: "
-					+ "\n"
-					+ "\tValue of root 1: " + (int)quad1.getRootOne()
-					+ "\n"
-					+ "\tValue of root 2: " + (int)quad1.getRootTwo()
-					+ "\n\n"
+					+ "\tValue of root 1: " + (int)quad1.getRootOne();
+					break;
+					
+				case 3:
+					output += "The number of roots for the first quadratic is infinite.";
+					break;
+					
+				default:
+					output += "The number of roots for the first quadratic is: "+(int)quad1.getRootNum()
+							+ "\nThe values of those roots are: "
+							+ "\n"
+							+ "\tValue of root 1: " + (int)quad1.getRootOne()
+							+ "\n"
+							+ "\tValue of root 2: " + (int)quad1.getRootTwo();
+					break;
+					
+			}
+			output += "\n\n"
 					+ "The second quadratic is: " + quad2.toString()
 					+ "\n\n"
 					+ "The quadratic which is the sum of the first and the second quadratics is: " + quad3.toString()
