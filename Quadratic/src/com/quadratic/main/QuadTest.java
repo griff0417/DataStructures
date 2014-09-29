@@ -95,7 +95,7 @@ public class QuadTest
 					+ "\n"
 					+ "-----------"
 					+ "\n\n"
-					+ "There was not enough data entered for this test."
+					+ "Improper data entered for this test."
 					+ "\n\n";
 		}
 	}
@@ -124,39 +124,49 @@ public class QuadTest
 		// Increment through all 8 input digits
 		for(int x = 0; x < 8; x++)
 		{
-			// Depending on which input character is being
-			// processed, set the values for the quadratics
-			switch (x)
+			try
 			{
-				case 0:
-					quad1.setCoefA(Double.parseDouble(tokens[x]));
-					break;
-				case 1:
-					quad1.setCoefB(Double.parseDouble(tokens[x]));
-					break;
-				case 2:
-					quad1.setCoefC(Double.parseDouble(tokens[x]));
-					break;
-				case 3:
-					xVal= Double.parseDouble(tokens[x]);
-					break;
-				case 4:
-					scale= Double.parseDouble(tokens[x]);
-					break;
-				case 5:
-					quad2.setCoefA(Double.parseDouble(tokens[x]));
-					break;
-				case 6:
-					quad2.setCoefB(Double.parseDouble(tokens[x]));
-					break;
-				case 7:
-					quad2.setCoefC(Double.parseDouble(tokens[x]));
-					break;
-				default:
-					System.out.println("Incorrect input character.");
-					quad1 = new Quadratic();
-					quad2 = new Quadratic();
-			} // End switch
+				// Depending on which input character is being
+				// processed, set the values for the quadratics
+				switch (x)
+				{
+					case 0:
+						quad1.setCoefA(Double.parseDouble(tokens[x]));
+						break;
+					case 1:
+						quad1.setCoefB(Double.parseDouble(tokens[x]));
+						break;
+					case 2:
+						quad1.setCoefC(Double.parseDouble(tokens[x]));
+						break;
+					case 3:
+						xVal= Double.parseDouble(tokens[x]);
+						break;
+					case 4:
+						scale= Double.parseDouble(tokens[x]);
+						break;
+					case 5:
+						quad2.setCoefA(Double.parseDouble(tokens[x]));
+						break;
+					case 6:
+						quad2.setCoefB(Double.parseDouble(tokens[x]));
+						break;
+					case 7:
+						quad2.setCoefC(Double.parseDouble(tokens[x]));
+						break;
+					default:
+						System.out.println("Incorrect input character.");
+						quad1 = new Quadratic();
+						quad2 = new Quadratic();
+				} // End switch
+			}//End try
+			catch (NumberFormatException e) 
+			{
+			    e.printStackTrace();
+			    
+			    calculations(xVal, scale, true); // Run the calculations method
+				return;
+			}
 		} // End for loop
 		
 		// Set quad3 to the sum of quad1 and quad2
