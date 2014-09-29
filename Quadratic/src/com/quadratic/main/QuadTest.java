@@ -49,8 +49,8 @@ public class QuadTest
 		System.out.println("Quad 1 CoefA: "+quad1.getCoefA());
 		System.out.println("Quad 1 CoefB: "+quad1.getCoefB());
 		System.out.println("Quad 1 CoefC: "+quad1.getCoefC());
-		System.out.println("Quad 2 CoefA: "+quad1.getCoefA());
-		System.out.println("Quad 2 CoefB: "+quad1.getCoefB());
+		System.out.println("Quad 2 CoefA: "+quad2.getCoefA());
+		System.out.println("Quad 2 CoefB: "+quad2.getCoefB());
 		System.out.println("Quad 2 CoefC: "+quad2.getCoefC());
 	}
 	
@@ -108,7 +108,7 @@ public class QuadTest
 			    quad1 = new Quadratic();//Resets fields in object q1,q2
 				quad2 = new Quadratic();
 				catchCalled = true;
-				x=0;
+				x=8;
 			}
 		
 		}//end for loop
