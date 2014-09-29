@@ -37,7 +37,7 @@ public class QuadTest
 	public static void intro()
 	{
 		System.out.println("This program is used to read data "
-						   + "from a test file and use that data "
+						   + "from a text file and use that data "
 						   + "to create new Quadratics, then do "
 						   + "various calculations with them.\n\n");
 	}
