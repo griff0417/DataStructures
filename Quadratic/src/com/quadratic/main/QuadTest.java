@@ -17,10 +17,10 @@ public class QuadTest
 	/***********************
 	 * Quadratics
 	 **********************/
-	private static Quadratic quad1;
-	private static Quadratic quad2;
+	private static Quadratic quad1 = new Quadratic();
+	private static Quadratic quad2 = new Quadratic();
 	// quad3 is the sum of quad1 and quad2
-	private static Quadratic quad3;
+	private static Quadratic quad3 = new Quadratic();
 	
 	
 	/**
@@ -62,7 +62,7 @@ public class QuadTest
 	 */
 	public static void parse(String line)
 	{
-		boolean defaultCaseCalled = false;
+		boolean catchCalled = false;
 		double scale = 0;
 		double xVal = 0;
 		String[] tokens = line.split("\\s+"); //Splits line by consecutive tokens " "
@@ -72,41 +72,47 @@ public class QuadTest
 		}
 		for(int x = 0; x < 8; x++)
 		{
-			switch (x){
-				case 0:
-					quad1.setCoefA(Double.parseDouble(tokens[x]));
-					break;
-				case 1:
-					quad1.setCoefB(Double.parseDouble(tokens[x]));
-					break;
-				case 2:
-					quad1.setCoefC(Double.parseDouble(tokens[x]));
-					break;
-				case 3:
-					xVal= Double.parseDouble(tokens[x]);
-					break;
-				case 4:
-					scale= Double.parseDouble(tokens[x]);
-					break;
-				case 5:
-					quad2.setCoefA(Double.parseDouble(tokens[x]));
-					break;
-				case 6:
-					quad2.setCoefB(Double.parseDouble(tokens[x]));
-					break;
-				case 7:
-					quad2.setCoefC(Double.parseDouble(tokens[x]));
-					break;
-				default:
-					System.out.println("Incorrect Char on line in txt");
-					quad1 = new Quadratic();//Resets fields in object q1,q2
-					quad2 = new Quadratic();
-					defaultCaseCalled = true;
-			}//end switch
-			
+			try{
+				switch (x){
+					case 0:
+						quad1.setCoefA(Double.parseDouble(tokens[x]));
+						break;
+					case 1:
+						quad1.setCoefB(Double.parseDouble(tokens[x]));
+						break;
+					case 2:
+						quad1.setCoefC(Double.parseDouble(tokens[x]));
+						break;
+					case 3:
+						xVal= Double.parseDouble(tokens[x]);
+						break;
+					case 4:
+						scale= Double.parseDouble(tokens[x]);
+						break;
+					case 5:
+						quad2.setCoefA(Double.parseDouble(tokens[x]));
+						break;
+					case 6:
+						quad2.setCoefB(Double.parseDouble(tokens[x]));
+						break;
+					case 7:
+						quad2.setCoefC(Double.parseDouble(tokens[x]));
+						break;
+					default:
+						System.out.println("Range changed check loop condition");
+						
+				}//end switch
+			}//End Try block
+			catch (NumberFormatException e) {
+			    e.printStackTrace();
+			    quad1 = new Quadratic();//Resets fields in object q1,q2
+				quad2 = new Quadratic();
+				catchCalled = true;
+				x=0;
+			}
 		
 		}//end for loop
-		if (defaultCaseCalled == false)
+		if (catchCalled == false)
 			calculations(xVal,scale);
 	}
 	
