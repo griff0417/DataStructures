@@ -115,7 +115,7 @@ public class QuadTest
 		
 		testNum++; // Increment the number of tests (used for output)
 		
-		if (tokens.length < 8) // Returns if input line has too few digits
+		if (tokens.length != 8) // Returns if input line has too few digits
 		{
 			calculations(xVal, scale, true); // Run the calculations method
 			return;
@@ -154,12 +154,8 @@ public class QuadTest
 					case 7:
 						quad2.setCoefC(Double.parseDouble(tokens[x]));
 						break;
-					default:
-						System.out.println("Incorrect input character.");
-						quad1 = new Quadratic();
-						quad2 = new Quadratic();
 				} // End switch
-			}//End try
+			} // End try
 			catch (NumberFormatException e) 
 			{
 			    e.printStackTrace();
