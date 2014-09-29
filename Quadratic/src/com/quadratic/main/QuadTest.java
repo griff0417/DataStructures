@@ -154,6 +154,8 @@ public class QuadTest
 					break;
 				default:
 					System.out.println("Incorrect input character.");
+					quad1 = new Quadratic();
+					quad2 = new Quadratic();
 			} // End switch
 		} // End for loop
 		
