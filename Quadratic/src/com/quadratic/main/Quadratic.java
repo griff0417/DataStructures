@@ -160,9 +160,16 @@ public class Quadratic implements Cloneable
 			else
 				return (int)coefA + "x^2 - " + (int)coefB * -1 + "x - " + (int)coefC * -1;
 		}
+		else if (coefB == 0)
+		{
+			if (coefC > 0)
+				return (int)coefA + "x^2 - " + (int)coefB * -1 + "x + " + (int)coefC;
+			else
+				return (int)coefA + "x^2 - " + (int)coefB * -1 + "x - " + (int)coefC * -1;
+		}
 		else
 		{
-			return "0";
+			return (int)coefA + "x^2 + " + (int)coefB + "x + " + (int)coefC;
 		}
 	}
 	
@@ -173,7 +180,17 @@ public class Quadratic implements Cloneable
 	public boolean equals(Object obj)
 	{
 		if (obj instanceof Quadratic)
-			return true;
+		{
+			Quadratic quad = (Quadratic)obj;
+			
+			if (coefA == quad.getCoefA() && 
+				coefB == quad.getCoefB() &&
+				coefC == quad.getCoefC())
+				return true;
+			else
+				return false;
+			
+		}
 		else
 			return false;
 	}
@@ -189,7 +206,7 @@ public class Quadratic implements Cloneable
 		
 		try 
 		{
-			clone = (Quadratic)quad.clone();
+			clone = (Quadratic)super.clone();
 		} 
 		catch (CloneNotSupportedException e) 
 		{

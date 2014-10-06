@@ -48,7 +48,7 @@ public class QuadTest
 	 * checks if they are aliases, then checks 
 	 * if the two quadratics have the same coefficients. 
 	 */
-	public static void calculations(double xVal, double scale, boolean wrongInput)
+	public static void calculations(double xVal, double scale, String line,  boolean wrongInput)
 	{
 		// Do calculations and set up the output
 		if (!wrongInput)
@@ -56,7 +56,7 @@ public class QuadTest
 			output += "*************************************************************"
 					+ "\n"
 					+ "Test # " + testNum
-					+ "\n"
+					+ "\n" + line + "\n"
 					+ "-----------"
 					+ "\n\n"
 					+ "The first quadratic is: " + quad1.toString()
@@ -114,7 +114,7 @@ public class QuadTest
 			output += "*************************************************************"
 					+ "\n"
 					+ "Test # " + testNum
-					+ "\n"
+					+ "\n" + line + "\n"
 					+ "-----------"
 					+ "\n\n"
 					+ "Improper data entered for this test."
@@ -139,7 +139,7 @@ public class QuadTest
 		
 		if (tokens.length != 8) // Returns if input line has too few digits
 		{
-			calculations(xVal, scale, true); // Run the calculations method
+			calculations(xVal, scale, line, true); // Run the calculations method
 			return;
 		}
 		
@@ -182,7 +182,7 @@ public class QuadTest
 			{
 			    e.printStackTrace();
 			    
-			    calculations(xVal, scale, true); // Run the calculations method
+			    calculations(xVal, scale, line, true); // Run the calculations method
 				return;
 			}
 		} // End for loop
@@ -190,7 +190,7 @@ public class QuadTest
 		// Set quad3 to the sum of quad1 and quad2
 		quad3 = Quadratic.sum(quad1, quad2);
 		
-		calculations(xVal, scale, false); // Run the calculations method
+		calculations(xVal, scale, line, false); // Run the calculations method
 	}
 	
 	/**

@@ -1,5 +1,6 @@
 *************************************************************
 Test # 1
+2   8   6 	3   2.0		1  1  1 
 -----------
 
 The first quadratic is: 2x^2 + 8x + 6
@@ -23,13 +24,14 @@ The first quadratic and the clone are not aliases, but are equal to each other.
 
 *************************************************************
 Test # 2
+0   0   0 	1   4.0		2  2  2
 -----------
 
-The first quadratic is: 0
+The first quadratic is: 0x^2 - 0x - 0
 
 The value of the first quadratic expression when x = 1.0 is: 0
 
-The first quadratic after scaling with a multiplier of 4.0 is: 0
+The first quadratic after scaling with a multiplier of 4.0 is: 0x^2 - 0x - 0
 
 The number of roots for the first quadratic is infinite.
 
@@ -37,19 +39,20 @@ The second quadratic is: 2x^2 + 2x + 2
 
 The quadratic which is the sum of the first and the second quadratics is: 2x^2 + 2x + 2
 
-A clone of the first quadratic is: 0
+A clone of the first quadratic is: 0x^2 - 0x - 0
 
 The first quadratic and the clone are not aliases, but are equal to each other.
 
 *************************************************************
 Test # 3
+0   0   5 	2   5		0  1  2
 -----------
 
-The first quadratic is: 0
+The first quadratic is: 0x^2 - 0x + 5
 
 The value of the first quadratic expression when x = 2.0 is: 5
 
-The first quadratic after scaling with a multiplier of 5.0 is: 0
+The first quadratic after scaling with a multiplier of 5.0 is: 0x^2 - 0x + 25
 
 The number of roots for the first quadratic is: 0
 
@@ -57,18 +60,20 @@ The second quadratic is: 0x^2 + 1x + 2
 
 The quadratic which is the sum of the first and the second quadratics is: 0x^2 + 1x + 7
 
-A clone of the first quadratic is: 0
+A clone of the first quadratic is: 0x^2 - 0x + 5
 
 The first quadratic and the clone are not aliases, but are equal to each other.
 
 *************************************************************
 Test # 4
+4  10   7
 -----------
 
 Improper data entered for this test.
 
 *************************************************************
 Test # 5
+0   2   6 	3   2		1  0  2
 -----------
 
 The first quadratic is: 0x^2 + 2x + 6
@@ -81,7 +86,7 @@ The number of roots for the first quadratic is: 1
 The value of the root is: 
 	Value of root 1: -2147483648
 
-The second quadratic is: 0
+The second quadratic is: 1x^2 - 0x + 2
 
 The quadratic which is the sum of the first and the second quadratics is: 1x^2 + 2x + 8
 
@@ -91,6 +96,7 @@ The first quadratic and the clone are not aliases, but are equal to each other.
 
 *************************************************************
 Test # 6
+2   4   9 	1   5		1  2  0
 -----------
 
 The first quadratic is: 2x^2 + 4x + 9
@@ -111,6 +117,7 @@ The first quadratic and the clone are not aliases, but are equal to each other.
 
 *************************************************************
 Test # 7
+3   6   3 	5   2 		5  5  5
 -----------
 
 The first quadratic is: 3x^2 + 6x + 3
