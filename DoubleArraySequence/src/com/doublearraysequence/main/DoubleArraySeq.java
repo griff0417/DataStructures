@@ -25,8 +25,8 @@ public class DoubleArraySeq
 	}
 	
 	/**
-	 * Get the size of this sequence.
-	 * @return size - the size of this sequence
+	 * Get the number of elements in this sequence.
+	 * @return size - the number of elements in this sequence
 	 */
 	public int size()
 	{
@@ -81,6 +81,137 @@ public class DoubleArraySeq
 	 * @param element - the element to add after the current index
 	 */
 	public void addAfter(double element)
+	{
+		
+	}
+	
+	/**
+	 * Remove the element at the current index of this sequence.
+	 * @return boolean - true if successfully removed
+	 */
+	public boolean removeCurrent()
+	{
+		return false;
+	}
+	
+	/**
+	 * Add all of the elements from the given DoubleArraySeq
+	 * to the end of this sequence.
+	 * @param seq - the DoubleArraySeq containing the data to add
+	 */
+	public void addAll(DoubleArraySeq seq)
+	{
+		
+	}
+	
+	/**
+	 * Combine the data of the two given DoubleArraySeq 
+	 * and create a new DoubleArraySeq with that data.
+	 * @param seq1 - the first DoubleArraySeq containing data
+	 * @param seq2 - the second DoubleArraySeq containing data
+	 * @return DoubleArraySeq - the new sequence containing the concatenated data
+	 */
+	public static DoubleArraySeq concatenation(DoubleArraySeq seq1, DoubleArraySeq seq2)
+	{
+		return null;
+	}
+	
+	/**
+	 * Create a clone of this sequence.
+	 * @return DoubleArraySeq - the cloned DoubleArraySeq
+	 */
+	public DoubleArraySeq clone()
+	{
+		return null;
+	}
+	
+	/**
+	 * Get the number of elements this sequence can hold in total.
+	 * @param capacity - the total capacity of this sequence
+	 */
+	public int getCapacity()
+	{
+		return 0;
+	}
+	
+	/**
+	 * Ensure that the capacity of this sequence is greater than
+	 * or equal to the given parameter.
+	 * @param capacity - the number to ensure capacity of
+	 */
+	public void getCapacity(int capacity)
+	{
+		
+	}
+	
+	/**
+	 * If there is excess space in this sequence containing
+	 * no elements, trim it off.
+	 */
+	public void trimToSize()
+	{
+		
+	}
+	
+	/**
+	 * Add the specified element to the front of this sequence.
+	 * @param element - the element to add to the front
+	 */
+	public void addToFront(double element)
+	{
+		
+	}
+	
+	/**
+	 * Remove the element at the front of this sequence.
+	 */
+	public void removeFromFront()
+	{
+		
+	}
+	
+	/**
+	 * Add the specified element to the end of this sequence.
+	 * @param element - the element to add to the end
+	 */
+	public void addToEnd(double element)
+	{
+		
+	}
+	
+	/**
+	 * Remove the element at the end of this sequence.
+	 */
+	public void removeFromEnd()
+	{
+		
+	}
+	
+	/**
+	 * Change the element at the end of this sequence
+	 * to the element located at the current index.
+	 */
+	public void endToCurrent()
+	{
+		
+	}
+	
+	/**
+	 * Get the element located at the specified index.
+	 * @param index - the index to obtain the element from
+	 * @return double - the element located at the specified index
+	 */
+	public double getElement(int index)
+	{
+		return 0;
+	}
+	
+	/**
+	 * Change the element at the specified index
+	 * to the element located at the current index.
+	 * @param index - the index at which to change the element
+	 */
+	public void elementToCurrent(int index)
 	{
 		
 	}
