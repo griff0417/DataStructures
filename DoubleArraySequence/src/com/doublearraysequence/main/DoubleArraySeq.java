@@ -1,6 +1,6 @@
 package com.doublearraysequence.main;
 
-public class DoubleArraySequence 
+public class DoubleArraySeq 
 {
 	private double[] data; // The contents of this sequence
 	private int manyItems; // The number of elements in this sequence
@@ -10,7 +10,7 @@ public class DoubleArraySequence
 	 * Create a new empty sequence with
 	 * a size of 10.
 	 */
-	public DoubleArraySequence()
+	public DoubleArraySeq()
 	{
 		data = new double[10];
 	}
@@ -19,7 +19,7 @@ public class DoubleArraySequence
 	 * Create a new empty sequence with
 	 * a specified size.
 	 */
-	public DoubleArraySequence(int capacity)
+	public DoubleArraySeq(int capacity)
 	{
 		data = new double[capacity];
 	}

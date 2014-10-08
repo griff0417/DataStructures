@@ -110,6 +110,20 @@ public class Quadratic implements Cloneable
 		
 		if (getRootNum() > 0)
 		{
+			if (getRootNum() == 1)
+			{
+				if (coefA == 0 && coefB != 0)
+				{
+					posRoot = (-coefC/coefB);
+					negRoot = (-coefC/coefB);
+				}
+				else if (coefA != 0 && Math.pow(coefB, 2) == 4 * coefA * coefC)
+				{
+					posRoot = (-coefB / (2 * coefA));
+					negRoot = (-coefB / (2 * coefA));
+				}
+			}
+			
 			if (posRoot < negRoot)
 				return posRoot;
 			else
@@ -130,6 +144,20 @@ public class Quadratic implements Cloneable
 		
 		if (getRootNum() > 0)
 		{
+			if (getRootNum() == 1)
+			{
+				if (coefA == 0 && coefB != 0)
+				{
+					posRoot = (-coefC/coefB);
+					negRoot = (-coefC/coefB);
+				}
+				else if (coefA != 0 && Math.pow(coefB, 2) == 4 * coefA * coefC)
+				{
+					posRoot = (-coefB / (2 * coefA));
+					negRoot = (-coefB / (2 * coefA));
+				}
+			}
+			
 			if (posRoot > negRoot)
 				return posRoot;
 			else

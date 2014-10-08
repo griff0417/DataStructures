@@ -84,7 +84,7 @@ The first quadratic after scaling with a multiplier of 2.0 is: 0x^2 + 4x + 12
 
 The number of roots for the first quadratic is: 1
 The value of the root is: 
-	Value of root 1: -2147483648
+	Value of root 1: -3
 
 The second quadratic is: 1x^2 - 0x + 2
 
