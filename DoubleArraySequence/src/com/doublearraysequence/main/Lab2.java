@@ -7,4 +7,5 @@ public class Lab2
 		SequenceTest testing = new SequenceTest();
 		testing.menu();
 	}
+	
 }
