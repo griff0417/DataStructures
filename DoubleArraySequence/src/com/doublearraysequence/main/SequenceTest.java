@@ -197,18 +197,18 @@ public class SequenceTest
 					switch ((int)doubleTokensArray[1])
 					{
 						case 1:
-							printOutput(line, doubleTokensArray, false, "");
 							currentSeq = sq1;
+							printOutput(line, doubleTokensArray, false, "");
 							break;
 							
 						case 2:
-							printOutput(line, doubleTokensArray, false, "");
 							currentSeq = sq2;
+							printOutput(line, doubleTokensArray, false, "");
 							break;
 							
 						case 3:
-							printOutput(line, doubleTokensArray, false, "");
 							currentSeq = sq3;
+							printOutput(line, doubleTokensArray, false, "");
 							break;
 							
 						default:
