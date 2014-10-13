@@ -1,6 +1,15 @@
 package com.doublearraysequence.main;
 
-
+/**
+ * DoubleArraySeq.java
+ * 
+ * @author Ryan Hochmuth & Jason Griffith
+ * 
+ * Description:
+ * 	DoubleArraySeq is a class that makes up a sequence object.
+ *  This sequence stores data of type double in a specific order.
+ *
+ */
 public class DoubleArraySeq implements Cloneable
 {
 	private double[] data; // The contents of this sequence
@@ -151,12 +160,14 @@ public class DoubleArraySeq implements Cloneable
 	 */
 	public void addAfter(double element)
 	{
+		double[] oldData = data;
+		
 		// Ensure the array is big enough for the new element
 		if(manyItems == data.length)
 			ensureCapacity(manyItems + 1);
 		
 		// If there is no current element, add this element
-		// to the end of the sequence at index 0
+		// to the end of the sequence
 		if(!isCurrent())
 			currentIndex = 0;
 		else
@@ -164,7 +175,7 @@ public class DoubleArraySeq implements Cloneable
 		
 		// Shift all the data after the current index to the right
 		for(int i = currentIndex; i < manyItems; i++)
-			data[i+1] = data[i];
+			data[i+1] = oldData[i];
 		
 		// Add the new element
 		data[currentIndex] = element;
@@ -178,7 +189,7 @@ public class DoubleArraySeq implements Cloneable
 	public boolean removeCurrent()
 	{
 		// Shift all the data after the current index to the right
-		for(int i = currentIndex; i < manyItems; i++)
+		for(int i = currentIndex; i < manyItems - 1; i++)
 		{
 			try
 			{
@@ -191,7 +202,6 @@ public class DoubleArraySeq implements Cloneable
 		}
 		
 		data[manyItems-- - 1] = 0;
-		currentIndex++;
 		
 		if (isCurrent())
 			return true;
@@ -221,7 +231,9 @@ public class DoubleArraySeq implements Cloneable
 		
 		// Copy the new data into the first array
 		System.arraycopy(seq.data, 0, this.data, this.manyItems, seq.size());
+		
 		manyItems += seq.size();
+		currentIndex = size() - 1;
 	}
 	
 	/**
@@ -275,6 +287,7 @@ public class DoubleArraySeq implements Cloneable
 	    }
 	      
 	    answer.data = data.clone( );
+	    answer.start();
 	      
 	    return answer;
 	}
@@ -366,7 +379,7 @@ public class DoubleArraySeq implements Cloneable
 			throw new IndexOutOfBoundsException("The sequence is empty.");
 		
 		// Shift all the data after the current index to the right
-		for(int i = 0; i < manyItems; i++)
+		for(int i = 0; i < manyItems - 1; i++)
 		{
 			try
 			{
@@ -442,6 +455,8 @@ public class DoubleArraySeq implements Cloneable
 	 */
 	public double getElement(int index)
 	{
+		currentIndex = index;
+		
 		if (isCurrent())
 			return data[index];
 		else
@@ -457,6 +472,20 @@ public class DoubleArraySeq implements Cloneable
 	{
 		if (isCurrent())
 			data[index] = getCurrent();
+		else
+			throw new IllegalStateException("There is no current element.");
+	}
+	
+	/**
+	 * Change the element at the specified index
+	 * to the specified element.
+	 * @param index - the index at which to change the element
+	 * @param element - the element to change to
+	 */
+	public void changeElementAtIndex(int index, double element)
+	{
+		if (index < manyItems)
+			data[index] = element;
 		else
 			throw new IllegalStateException("There is no current element.");
 	}

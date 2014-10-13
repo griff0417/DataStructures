@@ -1,12 +1,23 @@
 package com.doublearraysequence.main;
 
-
+/**
+ * SequenceTest.java
+ * 
+ * @author Ryan Hochmuth & Jason Griffith
+ * 
+ * Description:
+ * 	SequenceTest is a class used to test the functionality
+ * of DoubleArraySeq.
+ *
+ */
 public class SequenceTest
 {
 	DoubleArraySeq sq1 = null;
 	DoubleArraySeq sq2 = null;
 	DoubleArraySeq sq3 = null;
+	
 	DoubleArraySeq currentSeq = null;
+	
 	final String [] MENU_CHOICE = {"",
 							"Create a sequence","Delete a number",
 							"Delete the first number from the sequence",
@@ -33,24 +44,26 @@ public class SequenceTest
 		return -1;
 	}
 	
-	private DoubleArraySeq createSequence(double [] doubleTokens){
-		if (sq1==null && sq2==null){
-			sq1 = new DoubleArraySeq(doubleTokens.length -1);
+	private DoubleArraySeq createSequence(double [] doubleTokens)
+	{
+		if (sq1 == null && sq2 == null)
+		{
+			sq1 = new DoubleArraySeq(doubleTokens.length - 1);
 			return sq1;
 		}
-		else if (sq1!=null && sq2==null){
-			sq2 = new DoubleArraySeq(doubleTokens.length -1);
+		else if (sq1 != null && sq2 == null)
+		{
+			sq2 = new DoubleArraySeq(doubleTokens.length - 1);
 			return sq2;
 		}
-		else{
+		else
+		{
 			return sq1;
 		}
-		
-		
 	}
 	
-	public void menu (String line){
-		
+	public void menu (String line)
+	{
 		String[] tokens = line.split("[\\s\\,\\-]+");
 		double [] doubleTokensArray = new double[tokens.length];
 		for(int a=0;a<tokens.length;a++){
@@ -65,23 +78,7 @@ public class SequenceTest
 			    return;
 			}
 		}
-		//System.out.println("");		
-		/*
-		int messageChoice = 0;
-		String output=	"1. Create a sequence \n"+
-						"2. Delete a number \n"+ 
-						"3. Delete the first number from the sequence \n"+
-						"4. Add a number before another number \n"+
-						"5. Add a number after a number \n"+
-						"6. Add a number to the end of the sequence \n"+
-						"7. Display a number at a certain index \n"+
-						"8. Display the last element in the sequence \n"+
-						"9. Replace a number with another number \n"+
-						"10. Append another sequence to the first sequence \n"+
-						"11. Create a clone sequence \n"+
-						"12 Print the sequence \n"+
-						"13. Quit \n";
-		*/
+
 		if (doubleTokensArray[0]==3 || doubleTokensArray[0]==8 || doubleTokensArray[0]==10 ||
 			doubleTokensArray[0]==11){
 			switch((int)doubleTokensArray[0]){
@@ -89,26 +86,42 @@ public class SequenceTest
 					currentSeq.removeFromFront();
 					printOutput(line, doubleTokensArray, false, "");
 					break;
+					
 				case 8:
-					
+					printOutput(line, doubleTokensArray, false, "");
 					break;
+					
 				case 10:
-					
+					sq1.addAll(sq2);
+					currentSeq = sq1;
+					printOutput(line, doubleTokensArray, false, "");
 					break;
-				case 11:
 					
+				case 11:
+					if (sq1 != null)
+					{
+						sq3 = sq1.clone();
+						currentSeq = sq3;
+						printOutput(line, doubleTokensArray, false, "");
+					}
+					else
+						printOutput(line, doubleTokensArray, true, "Sequence 1 has not been initialized.");
 					break;
 			}
 		}
 			
-		else if (doubleTokensArray.length>1){
-			switch((int)doubleTokensArray[0]){
+		else if (doubleTokensArray.length > 1)
+		{
+			switch((int)doubleTokensArray[0])
+			{
 				default:
-	
 					break;
+					
 				case 1:
-					currentSeq=createSequence(doubleTokensArray);
-					for (int b=1;b<doubleTokensArray.length;b++){
+					currentSeq = createSequence(doubleTokensArray);
+					
+					for (int b = 1; b < doubleTokensArray.length; b++)
+					{
 						currentSeq.addAfter(doubleTokensArray[b]);
 					}
 					printOutput(line, doubleTokensArray, false, "");
@@ -158,39 +171,68 @@ public class SequenceTest
 					}
 					else
 						printOutput(line,doubleTokensArray,true, "Exception - Number not found.");
-						
 					break;
+					
 				case 6:
 					currentSeq.addToEnd(doubleTokensArray[1]);
 					printOutput(line,doubleTokensArray,false, "");
 					break;
+					
 				case 7:
 					currentSeq.getElement((int)doubleTokensArray[1]);
 					printOutput(line,doubleTokensArray,false, "");
-					
 					break;
 				
 				case 9:
-					
+					if (findIndex(doubleTokensArray[1]) != -1)
+					{
+						currentSeq.changeElementAtIndex(findIndex(doubleTokensArray[1]) - 1, doubleTokensArray[2]);
+						printOutput(line, doubleTokensArray, false, "");
+					}
+					else
+						printOutput(line, doubleTokensArray, true, "Exception - Number not found.");
 					break;
 			
 				case 12:
-					
+					switch ((int)doubleTokensArray[1])
+					{
+						case 1:
+							printOutput(line, doubleTokensArray, false, "");
+							currentSeq = sq1;
+							break;
+							
+						case 2:
+							printOutput(line, doubleTokensArray, false, "");
+							currentSeq = sq2;
+							break;
+							
+						case 3:
+							printOutput(line, doubleTokensArray, false, "");
+							currentSeq = sq3;
+							break;
+							
+						default:
+							printOutput(line, doubleTokensArray, true, "Sequence does not exist.");
+							break;
+					}
 					break;
+					
 				case 13:
 					
 					break;
 			}
 		}
 		
-		else{
-			
+		else
+		{
 			printOutput(line,doubleTokensArray,true, "Exception - No data was created.");
 		}
 	}
 	
-	public void printSequence(DoubleArraySeq seq,double [] doubleTokensArray){
-		switch((int)doubleTokensArray[0]){
+	public void printSequence(DoubleArraySeq seq,double [] doubleTokensArray)
+	{
+		switch((int)doubleTokensArray[0])
+		{
 			case 2:
 				System.out.println("Deleted "+doubleTokensArray[1]+" from the sequence.");
 				
@@ -209,28 +251,47 @@ public class SequenceTest
 				break;
 			case 7:
 				System.out.println("Number "+currentSeq.getElement((int)doubleTokensArray[1])+" is at index location "+((int)doubleTokensArray[1]));
-				
-				break;	
-			case 8:
-				System.out.println("The last element is the sequence is "+currentSeq.getElement(currentSeq.size()-1));
-				
 				break;
+
+			case 8:
+				System.out.println("The last element in the sequence is " + currentSeq.getElement(currentSeq.size() - 1));
+				break;
+				
 			case 9:
 				System.out.println("Replaced "+(int)doubleTokensArray[1]+" with "+(int)doubleTokensArray[2]);
-				
 				break;
-				
 		}
+		
 		double currentElement = currentSeq.getCurrent();
 		String output = "";
-		for (currentSeq.start();currentSeq.isCurrent();currentSeq.advance()){
+		for (currentSeq.start();currentSeq.isCurrent();currentSeq.advance())
+		{
 			output += currentSeq.getCurrent()+" ";
 		}
-		System.out.println("The Sequence: "+output);
+		
+		if (currentSeq == sq1)
+			System.out.println("The Sequence #1: " + output);
+		else if (currentSeq == sq2)
+			System.out.println("The Sequence #2: " + output);
+		else if (currentSeq == sq3)
+			System.out.println("The Sequence #3: " + output);
 		System.out.println("Number of elements: "+currentSeq.size());
 		System.out.println("Current elements: "+currentElement);
 		
-		
+		switch((int)doubleTokensArray[0])
+		{
+			case 10:
+				currentSeq = sq2;
+				break;
+				
+			case 11:
+				currentSeq = sq2;
+				break;
+				
+			case 12:
+				currentSeq = sq2;
+				break;
+		}
 	}
 	
 	private void printOutput(String line, double [] doubleTokensArray, boolean exception, String exceptionMessage){
