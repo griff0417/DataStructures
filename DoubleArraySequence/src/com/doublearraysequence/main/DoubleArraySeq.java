@@ -32,7 +32,6 @@ public class DoubleArraySeq implements Cloneable
 		try
 		{
 			data = new double[capacity];
-			System.out.println("Created array");
 		}
 		catch(OutOfMemoryError e)
 		{
