@@ -25,6 +25,7 @@ public class Lab2
 		{
 			seqTest.menu(scanner.nextLine());
 		}
+		
 	}
 		
 	}
