@@ -24,9 +24,9 @@ public class SequenceTest
 	
 	private int findIndex(double element){
 		int index = 0;
-		for (sq1.start();sq1.isCurrent();sq1.advance()){
+		for (currentSeq.start();currentSeq.isCurrent();currentSeq.advance()){
 			index++;
-			if (sq1.getCurrent()==element)
+			if (currentSeq.getCurrent()==element)
 				return index;
 		
 		}
@@ -86,7 +86,8 @@ public class SequenceTest
 			doubleTokensArray[0]==11){
 			switch((int)doubleTokensArray[0]){
 				case 3:
-					
+					currentSeq.removeFromFront();
+					printOutput(line, doubleTokensArray, false, "");
 					break;
 				case 8:
 					
@@ -116,7 +117,12 @@ public class SequenceTest
 				case 2:
 					if (findIndex(doubleTokensArray[1]) != -1)
 					{
-						
+						currentSeq.start();
+						for(int b = 0;b!=findIndex(doubleTokensArray[1]);b++){
+							currentSeq.advance();
+							
+						}
+						currentSeq.removeCurrent();
 						printOutput(line,doubleTokensArray,false, "");
 					}
 					else
@@ -125,23 +131,42 @@ public class SequenceTest
 					break;
 				
 				case 4:
-					
-					for (int b=1;b<doubleTokensArray.length;b++){
-						currentSeq.addBefore(doubleTokensArray[b]);
+					if (findIndex(doubleTokensArray[2]) != -1)
+					{
+						currentSeq.start();
+						for(int b = 0;b!=findIndex(doubleTokensArray[2]);b++){
+							currentSeq.advance();
+							
+						}
+						currentSeq.addBefore(doubleTokensArray[1]);
+						printOutput(line,doubleTokensArray,false, "Exception - Number not found.");
 					}
+					else
+						printOutput(line,doubleTokensArray,true, "Exception - Number not found.");
+						
 					break;
 				case 5:
-					for (int b=1;b<doubleTokensArray.length;b++){
-						currentSeq.addAfter(doubleTokensArray[b]);
+					if (findIndex(doubleTokensArray[2]) != -1)
+					{
+						currentSeq.start();
+						for(int b = 0;b!=findIndex(doubleTokensArray[2]);b++){
+							currentSeq.advance();
+							
+						}
+						currentSeq.addAfter(doubleTokensArray[1]);
+						printOutput(line,doubleTokensArray,false, "Exception - Number not found.");
 					}
+					else
+						printOutput(line,doubleTokensArray,true, "Exception - Number not found.");
+						
 					break;
 				case 6:
-					for (int c=1;c<doubleTokensArray.length;c++)
-						
-					
+					currentSeq.addToEnd(doubleTokensArray[1]);
+					printOutput(line,doubleTokensArray,false, "");
 					break;
 				case 7:
-					
+					currentSeq.getElement((int)doubleTokensArray[1]);
+					printOutput(line,doubleTokensArray,false, "");
 					
 					break;
 				
@@ -175,7 +200,7 @@ public class SequenceTest
 				
 				break;
 			case 5:
-				System.out.println("Added element "+(int)doubleTokensArray[1]+" After "+(int)doubleTokensArray[2]);
+				System.out.println("Added element "+(int)doubleTokensArray[1]+" after "+(int)doubleTokensArray[2]);
 				
 				break;
 			case 6:
@@ -183,7 +208,7 @@ public class SequenceTest
 				
 				break;
 			case 7:
-				System.out.println("Number "+(int)doubleTokensArray[1]+" is at index location "+findIndex(doubleTokensArray[1]));
+				System.out.println("Number "+currentSeq.getElement((int)doubleTokensArray[1])+" is at index location "+((int)doubleTokensArray[1]));
 				
 				break;	
 			case 8:

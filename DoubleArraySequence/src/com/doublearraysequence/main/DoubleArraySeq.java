@@ -239,7 +239,7 @@ public class DoubleArraySeq implements Cloneable
 				}
 				else if (x > addIndex)
 				{
-					newArray[x] = data[x];
+					newArray[x] = data[x - 1];
 				}
 			}
 			
@@ -274,6 +274,8 @@ public class DoubleArraySeq implements Cloneable
 					if (index != skipIndex)
 						addAfter(newArray[index]);
 				}
+				
+				currentIndex = skipIndex;
 			}
 			
 			return true;
