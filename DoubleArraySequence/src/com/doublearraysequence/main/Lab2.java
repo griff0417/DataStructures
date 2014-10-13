@@ -2,13 +2,30 @@ package com.doublearraysequence.main;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
+
+/**
+ * Lab2.java
+ * 
+ * @author Ryan Hochmuth & Jason Griffith
+ * 
+ * Description:
+ * 	Lab2 is the driver class to run SequenceTest and 
+ *  use DoubleArraySeq.  It takes input through a text
+ *  file and sends the data to SequenceTest.menu()
+ *
+ */
 public class Lab2
 {
+	// The scanner to read from the text file
 	private static Scanner scanner;
-	public static void main(String args[]){
-		
+	
+	/**
+	 * The main method to start the program.
+	 * @param args
+	 */
+	public static void main(String args[])
+	{
 		SequenceTest seqTest = new SequenceTest();
-		//testing.menu();
 
 		// Attempt to create the scanner by finding the input File
 		try 
@@ -25,8 +42,5 @@ public class Lab2
 		{
 			seqTest.menu(scanner.nextLine());
 		}
-		
 	}
-		
-	}
-	
+}
