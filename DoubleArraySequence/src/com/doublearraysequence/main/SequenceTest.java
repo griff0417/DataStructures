@@ -45,7 +45,7 @@ public class SequenceTest
 	private int findIndex(double element)
 	{
 		int index = 0;
-		
+
 		// Increment through the sequence testing each element for the one
 		// you're looking for
 		for (currentSeq.start(); currentSeq.isCurrent(); currentSeq.advance())
@@ -53,7 +53,9 @@ public class SequenceTest
 			index++;
 			
 			if (currentSeq.getCurrent() == element) // If found, return the index
+			{
 				return index;
+			}
 		}
 		
 		return -1; // If the element wasn't found, return -1
@@ -220,13 +222,44 @@ public class SequenceTest
 					break;
 				
 				case 9: // Replace a number with another number
-					if (findIndex(doubleTokensArray[1]) != -1)
+					double currentElement = currentSeq.getCurrent();
+					int count = 0;
+					int oldIndex = 0;
+					
+					for (currentSeq.start(); currentSeq.isCurrent(); currentSeq.advance())
+					{
+						count++;
+						
+						if (currentSeq.getCurrent() == currentElement) // If found, return the index
+						{
+							oldIndex = count;
+						}
+					}
+					
+					int index = findIndex(doubleTokensArray[1]);
+					
+					if (index != -1)
 					{
 						currentSeq.changeElementAtIndex(findIndex(doubleTokensArray[1]) - 1, doubleTokensArray[2]);
 						printOutput(line, doubleTokensArray, false, "");
+						
+						currentSeq.start();
+						// Increment through the sequence and get all of the elements
+						for (int x = 0; x < index; x++)
+						{
+							currentSeq.advance();
+						}
 					}
 					else
+					{
+						currentSeq.start();
+						// Increment through the sequence and get all of the elements
+						for (int x = 0; x < oldIndex; x++)
+						{
+							currentSeq.advance();
+						}
 						printOutput(line, doubleTokensArray, true, "Exception - Number not found.");
+					}
 					break;
 			
 				case 12: // Print the sequence
