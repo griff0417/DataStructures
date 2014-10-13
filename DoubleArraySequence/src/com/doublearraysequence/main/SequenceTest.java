@@ -10,7 +10,26 @@ public class SequenceTest
 	DoubleArraySeq sq2;
 	DoubleArraySeq sq3;
 	
-	public void menu (){
+	
+	
+	
+	public void menu (String menuChoice){
+		String[] tokens = menuChoice.split("\\s+|\\,+|\\-+");
+		double [] doubleTokensArray = new double[tokens.length-1];
+		for(int a=0;a<tokens.length;a++){
+			try{
+				doubleTokensArray[a] = Double.parseDouble(tokens[a]);
+				
+			}
+			catch (NumberFormatException e) 
+			{
+			    e.printStackTrace();
+			    System.out.println("Invalid char on line");
+			    return;
+			}
+		}
+		//System.out.println("");		
+		/*
 		int messageChoice = 0;
 		String output=	"1. Create a sequence \n"+
 						"2. Delete a number \n"+ 
@@ -25,18 +44,8 @@ public class SequenceTest
 						"11. Create a clone sequence \n"+
 						"12 Print the sequence \n"+
 						"13. Quit \n";
-		String input = JOptionPane.showInputDialog(null,output,"Enter Value Here");
-		try{
-			messageChoice = Integer.parseInt(input);
-			System.out.println(messageChoice);
-		}
-		
-		catch (Exception e) {
-		    System.err.println("Value inputed not numerical" + e.getMessage());
-		}
-		
-		
-		switch(messageChoice){
+		*/
+		switch((int)doubleTokensArray[0]){
 			default:
 
 				break;
@@ -82,6 +91,7 @@ public class SequenceTest
 				
 				break;
 		}
+		
 	}
 	
 	public void printSequence(DoubleArraySeq seq){
@@ -92,6 +102,7 @@ public class SequenceTest
 		
 		return 0;
 	}
+	
 
 
 }
