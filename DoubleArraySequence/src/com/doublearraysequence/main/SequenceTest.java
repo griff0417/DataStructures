@@ -52,9 +52,6 @@ public class SequenceTest
 	public void menu (String line){
 		
 		String[] tokens = line.split("[\\s\\,\\-]+");
-		for (int i=0;i<tokens.length;i++){
-			System.out.println(tokens[i]);
-		}
 		double [] doubleTokensArray = new double[tokens.length];
 		for(int a=0;a<tokens.length;a++){
 			try{
