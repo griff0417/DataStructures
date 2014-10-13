@@ -29,6 +29,9 @@ public class DoubleArraySeq implements Cloneable
 	 */
 	public DoubleArraySeq(int capacity)
 	{
+		if(capacity <= 0)
+			throw new IllegalArgumentException("InitialCapacity is negative: " + capacity);
+		
 		try
 		{
 			data = new double[capacity];
@@ -79,7 +82,7 @@ public class DoubleArraySeq implements Cloneable
 	public boolean isCurrent()
 	{
 		// Check if the current index is outside of the array bounds
-		if (currentIndex >= getCapacity() || currentIndex < 0)
+		if (currentIndex >= manyItems || currentIndex < 0)
 		{
 			return false;
 		}
@@ -122,63 +125,22 @@ public class DoubleArraySeq implements Cloneable
 	 */
 	public void addBefore(double element)
 	{
-		// Instance variables
-		double[] newArray = null;
-		int x = 0;
-		int addIndex;
+		// Ensure the array is big enough for the new element
+		if(manyItems == data.length)
+			ensureCapacity(manyItems + 1);
 		
-		// Check if there is a current element
-		if (isCurrent())
-			addIndex = currentIndex;
-		else
-			addIndex = 0;
-		
-		// If this is the first element added to the
-		// sequence, add it to the beginning only
-		if (manyItems == 0)
-		{
-			manyItems++;
-			data[0] = element;
+		// If there is no current element, add this element
+		// to the front of the sequence at index 0
+		if(!isCurrent())
 			currentIndex = 0;
-		}
-		else
-		{
-			manyItems++;
-			
-			try
-			{
-				if (getCapacity() < manyItems)
-					newArray = new double[manyItems];
-				else
-					newArray = new double[getCapacity()];
-			}
-			catch(OutOfMemoryError e)
-			{
-				manyItems--;
-				e.printStackTrace();
-			}
-			
-			// Shift all elements and add the new one
-			for (; x < manyItems; x++)
-			{
-				if (x < addIndex)
-				{
-					newArray[x] = data[x];
-				}
-				else if (x == addIndex)
-				{
-					newArray[x] = element;
-					currentIndex = x;
-				}
-				else if (x > addIndex)
-				{
-					newArray[x] = data[x - 1];
-				}
-			}
-			
-			// Update data
-			data = newArray.clone();
-		}
+		
+		// Shift all the data to the right
+		for(int i = manyItems; i > currentIndex; i--)
+			data[i] = data[i-1];
+		
+		// Add the new element
+		data[currentIndex] = element;
+		manyItems++;
 	}
 	
 	/**
@@ -189,63 +151,24 @@ public class DoubleArraySeq implements Cloneable
 	 */
 	public void addAfter(double element)
 	{
-		// Instance variables
-		double[] newArray = null;
-		int x = 0;
-		int addIndex;
+		// Ensure the array is big enough for the new element
+		if(manyItems == data.length)
+			ensureCapacity(manyItems + 1);
 		
-		// Check if there is a current element
-		if (isCurrent())
-			addIndex = currentIndex + 1;
-		else
-			addIndex = manyItems;
-		
-		// If this is the first element added to the
-		// sequence, add it to the end only
-		if (manyItems == 0)
-		{
-			manyItems++;
-			data[0] = element;
+		// If there is no current element, add this element
+		// to the end of the sequence at index 0
+		if(!isCurrent())
 			currentIndex = 0;
-		}
 		else
-		{
-			manyItems++;
-			
-			try
-			{
-				if (getCapacity() < manyItems)
-					newArray = new double[manyItems];
-				else
-					newArray = new double[getCapacity()];
-			}
-			catch(OutOfMemoryError e)
-			{
-				manyItems--;
-				e.printStackTrace();
-			}
-			
-			// Shift all elements and add the new one
-			for (; x < manyItems; x++)
-			{
-				if (x < addIndex)
-				{
-					newArray[x] = data[x];
-				}
-				else if (x == addIndex)
-				{
-					newArray[x] = element;
-					currentIndex = x;
-				}
-				else if (x > addIndex)
-				{
-					newArray[x] = data[x - 1];
-				}
-			}
-			
-			// Update data
-			data = newArray.clone();
-		}
+			currentIndex++;
+		
+		// Shift all the data after the current index to the right
+		for(int i = currentIndex; i < manyItems; i++)
+			data[i+1] = data[i];
+		
+		// Add the new element
+		data[currentIndex] = element;
+		manyItems++;
 	}
 	
 	/**
@@ -254,37 +177,26 @@ public class DoubleArraySeq implements Cloneable
 	 */
 	public boolean removeCurrent()
 	{
-		try
+		// Shift all the data after the current index to the right
+		for(int i = currentIndex; i < manyItems; i++)
 		{
-			if (isCurrent())
+			try
 			{
-				int index = 0;
-				int skipIndex = currentIndex;
-				double[] newArray = data;
-				int oldSize = size();
-				
-				// Wipe the data
-				data = new double[getCapacity()];
-				
-				manyItems = 0;
-				
-				// Add the remaining elements
-				for (; index < oldSize; index++)
-				{
-					if (index != skipIndex)
-						addAfter(newArray[index]);
-				}
-				
-				currentIndex = skipIndex;
+				data[i] = data[i + 1];
 			}
-			
+			catch(ArrayIndexOutOfBoundsException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		
+		data[manyItems-- - 1] = 0;
+		currentIndex++;
+		
+		if (isCurrent())
 			return true;
-		}
-		catch(IllegalStateException e)
-		{
-			e.printStackTrace();
+		else
 			return false;
-		}
 	}
 	
 	/**
@@ -294,31 +206,22 @@ public class DoubleArraySeq implements Cloneable
 	 */
 	public void addAll(DoubleArraySeq seq)
 	{
+		if(seq == null)
+			throw new NullPointerException("The DoubleArraySeq to add is null.");
+		
+		// Resize the array to include both sets of data
 		try
 		{
-			if (seq != null)
-			{
-				// Size the new sequence appropriately
-				try
-				{
-					ensureCapacity(size() + seq.size());
-					
-					// Add the second sequence's elements
-					for (seq.start(); seq.isCurrent(); seq.advance())
-					{
-						addAfter(seq.getCurrent());
-					}
-				}
-				catch(OutOfMemoryError e)
-				{
-					e.printStackTrace();
-				}
-			}
+			ensureCapacity(manyItems + seq.size());
 		}
-		catch(NullPointerException e)
+		catch(OutOfMemoryError e)
 		{
 			e.printStackTrace();
 		}
+		
+		// Copy the new data into the first array
+		System.arraycopy(seq.data, 0, this.data, this.manyItems, seq.size());
+		manyItems += seq.size();
 	}
 	
 	/**
@@ -330,42 +233,21 @@ public class DoubleArraySeq implements Cloneable
 	 */
 	public static DoubleArraySeq concatenate(DoubleArraySeq seq1, DoubleArraySeq seq2)
 	{
-		DoubleArraySeq newSeq = new DoubleArraySeq();
+		if(seq1 == null || seq2 == null)
+			throw new NullPointerException("seq1(" + seq1 +") or seq2(" + seq2 + ") is null.");
 		
-		try
-		{
-			if (seq1 != null && seq2 != null)
-			{
-				// Size the new sequence appropriately
-				try
-				{
-					newSeq.ensureCapacity(seq1.size() + seq2.size());
-					
-					// Add the first sequence's elements
-					for (seq1.start(); seq1.isCurrent(); seq1.advance())
-					{
-						newSeq.addAfter(seq1.getCurrent());
-					}
-					
-					// Add the second sequence's elements
-					for (seq2.start(); seq2.isCurrent(); seq2.advance())
-					{
-						newSeq.addAfter(seq2.getCurrent());
-					}
-				}
-				catch(OutOfMemoryError e)
-				{
-					e.printStackTrace();
-				}
-			}
-			
-			return newSeq;
-		}
-		catch(NullPointerException e)
-		{
-			e.printStackTrace();
-			return null;
-		}
+		// The new bigger sequence to return
+		DoubleArraySeq newDoubleArraySeq = new DoubleArraySeq(seq1.getCapacity() + seq2.getCapacity());
+		
+		// Copy all the data into the new sequence
+		System.arraycopy(seq1.data, 0, newDoubleArraySeq.data, 0, seq1.size());
+		System.arraycopy(seq2.data, 0, newDoubleArraySeq.data, seq1.size(), seq2.size());
+		
+		newDoubleArraySeq.manyItems = seq1.size() + seq2.size();
+		
+		newDoubleArraySeq.trimToSize();
+		
+		return newDoubleArraySeq;
 	}
 	
 	/**
@@ -415,10 +297,12 @@ public class DoubleArraySeq implements Cloneable
 	{
 		double[] newArray = null;
 		
+		// If the array is already big enough, do nothing
 		if (data.length < capacity)
 		{
 			try 
 			{
+				// Try and resize the array
 				newArray = new double[capacity];
 			}
 			catch(OutOfMemoryError e)
@@ -426,8 +310,10 @@ public class DoubleArraySeq implements Cloneable
 				e.printStackTrace();
 			}
 			
-			System.arraycopy( data, 0, newArray, 0, data.length );
+			// Copy over the existing data
+			System.arraycopy(data, 0, newArray, 0, manyItems);
 			
+			// Update the data array
 			data = newArray.clone();
 		}
 	}
@@ -454,57 +340,21 @@ public class DoubleArraySeq implements Cloneable
 	 */
 	public void addToFront(double element)
 	{
-		// Instance variables
-		double[] newArray = null;
-		int x = 0;
-		int addIndex = 0;
+		// Ensure the array is big enough for the new element
+		if(manyItems == data.length)
+			ensureCapacity(manyItems + 1);
 		
-		// If this is the first element added to the
-		// sequence, add it to the beginning only
-		if (manyItems == 0)
-		{
-			manyItems++;
-			data[0] = element;
-			currentIndex = 0;
-		}
-		else
-		{
-			manyItems++;
-			
-			try
-			{
-				if (getCapacity() < manyItems)
-					newArray = new double[manyItems];
-				else
-					newArray = new double[getCapacity()];
-			}
-			catch(OutOfMemoryError e)
-			{
-				manyItems--;
-				e.printStackTrace();
-			}
-			
-			// Shift all elements and add the new one
-			for (; x < manyItems; x++)
-			{
-				if (x < addIndex)
-				{
-					newArray[x] = data[x];
-				}
-				else if (x == addIndex)
-				{
-					newArray[x] = element;
-					currentIndex = x;
-				}
-				else if (x > addIndex)
-				{
-					newArray[x] = data[x - 1];
-				}
-			}
-			
-			// Update data
-			data = newArray.clone();
-		}
+		// Set the index to the beginning of the sequence
+		currentIndex = 0;
+		
+		// Shift all the data to the right
+		for(int i = manyItems; i > currentIndex; i--)
+			data[i] = data[i-1];
+		
+		// Add the new element
+		data[currentIndex] = element;
+		manyItems++;
+		currentIndex = 0;
 	}
 	
 	/**
@@ -512,8 +362,24 @@ public class DoubleArraySeq implements Cloneable
 	 */
 	public void removeFromFront()
 	{
-		start();
-		removeCurrent();
+		if (manyItems == 0)
+			throw new IndexOutOfBoundsException("The sequence is empty.");
+		
+		// Shift all the data after the current index to the right
+		for(int i = 0; i < manyItems; i++)
+		{
+			try
+			{
+				data[i] = data[i + 1];
+			}
+			catch(ArrayIndexOutOfBoundsException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		
+		data[manyItems-- - 1] = 0;
+		currentIndex = 0;
 	}
 	
 	/**
@@ -522,28 +388,14 @@ public class DoubleArraySeq implements Cloneable
 	 */
 	public void addToEnd(double element)
 	{
-		// If this is the first element added to the
-		// sequence, add it to the end only
-		if (manyItems == 0)
-		{
-			manyItems++;
-			data[0] = element;
-			currentIndex = 0;
-		}
-		else
-		{
-			try
-			{
-				ensureCapacity(manyItems + 1);
-			}
-			catch(OutOfMemoryError e)
-			{
-				e.printStackTrace();
-			}
-			
-			currentIndex = size();
-			addAfter(element);
-		}
+		// Ensure the array is big enough for the new element
+		if(manyItems == data.length)
+			ensureCapacity(manyItems + 1);
+		
+		// Add the new element
+		data[manyItems] = element;
+		manyItems++;
+		currentIndex = manyItems - 1;
 	}
 	
 	/**
@@ -551,8 +403,24 @@ public class DoubleArraySeq implements Cloneable
 	 */
 	public void removeFromEnd()
 	{
-		currentIndex = size() - 1;
-		removeCurrent();
+		if (manyItems == 0)
+			throw new IndexOutOfBoundsException("The sequence is empty.");
+		
+		// Shift all the data after the current index to the right
+		for(int i = manyItems - 1; i < manyItems; i++)
+		{
+			try
+			{
+				data[i] = data[i + 1];
+			}
+			catch(ArrayIndexOutOfBoundsException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		
+		data[manyItems-- - 1] = 0;
+		currentIndex = manyItems;
 	}
 	
 	/**
@@ -561,7 +429,10 @@ public class DoubleArraySeq implements Cloneable
 	 */
 	public void endToCurrent()
 	{
-		data[size() - 1] = getCurrent();
+		if (isCurrent())
+			data[size() - 1] = getCurrent();
+		else
+			throw new IllegalStateException("There is no current element.");
 	}
 	
 	/**
@@ -571,7 +442,10 @@ public class DoubleArraySeq implements Cloneable
 	 */
 	public double getElement(int index)
 	{
-		return data[index];
+		if (isCurrent())
+			return data[index];
+		else
+			throw new IllegalStateException("There is no element at " + index + ".");
 	}
 	
 	/**
@@ -581,6 +455,9 @@ public class DoubleArraySeq implements Cloneable
 	 */
 	public void elementToCurrent(int index)
 	{
-		data[index] = getCurrent();
+		if (isCurrent())
+			data[index] = getCurrent();
+		else
+			throw new IllegalStateException("There is no current element.");
 	}
 }
