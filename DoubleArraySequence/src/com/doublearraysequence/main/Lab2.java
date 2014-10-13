@@ -13,7 +13,7 @@ public class Lab2
 		// Attempt to create the scanner by finding the input File
 		try 
 		{
-			scanner = new Scanner(new File("src/Lab2.txt"));
+			scanner = new Scanner(new File("src/test.txt"));
 		} 
 		catch (FileNotFoundException e) 
 		{

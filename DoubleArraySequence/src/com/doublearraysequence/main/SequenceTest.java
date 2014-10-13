@@ -1,8 +1,5 @@
 package com.doublearraysequence.main;
 
-import java.io.IOException;
-
-import javax.swing.JOptionPane;
 
 public class SequenceTest
 {
@@ -54,8 +51,11 @@ public class SequenceTest
 	
 	public void menu (String line){
 		
-		String[] tokens = line.split("\\s+|\\,+|\\-+");
-		double [] doubleTokensArray = new double[tokens.length-1];
+		String[] tokens = line.split("[\\s\\,\\-]+");
+		for (int i=0;i<tokens.length;i++){
+			System.out.println(tokens[i]);
+		}
+		double [] doubleTokensArray = new double[tokens.length];
 		for(int a=0;a<tokens.length;a++){
 			try{
 				doubleTokensArray[a] = Double.parseDouble(tokens[a]);
@@ -113,6 +113,7 @@ public class SequenceTest
 					for (int b=1;b<doubleTokensArray.length;b++){
 						currentSeq.addAfter(doubleTokensArray[b]);
 					}
+					printOutput(line, doubleTokensArray, false, "");
 					break;
 					
 				case 2:
