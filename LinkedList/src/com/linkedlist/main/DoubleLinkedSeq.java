@@ -34,7 +34,7 @@ public class DoubleLinkedSeq implements Cloneable
    * @exception OutOfMemoryError
    *   Indicates insufficient memory for a new node.
    **/
-   public void addAfter(int element)
+   public void addAfter(double element)
    {
       
    }
@@ -51,7 +51,7 @@ public class DoubleLinkedSeq implements Cloneable
    * @exception OutOfMemoryError
    *   Indicates insufficient memory for a new node.
    **/
-   public void addBefore(int element)
+   public void addBefore(double element)
    {
       
    }
@@ -104,7 +104,7 @@ public class DoubleLinkedSeq implements Cloneable
    * @exception OutOfMemoryError
    *   Indicates insufficient memory for creating the clone.
    **/ 
-   public Object clone( )
+   public DoubleLinkedSeq clone( )
    {  
       return null;
    }
@@ -294,6 +294,20 @@ public class DoubleLinkedSeq implements Cloneable
 	{
 		if (isCurrent())
 			data[index] = getCurrent();
+		else
+			throw new IllegalStateException("There is no current element.");
+	}
+	
+	/**
+	 * Change the element at the specified index
+	 * to the specified element.
+	 * @param index - the index at which to change the element
+	 * @param element - the element to change to
+	 */
+	public void changeElementAtIndex(int index, double element)
+	{
+		if (index < manyItems)
+			data[index] = element;
 		else
 			throw new IllegalStateException("There is no current element.");
 	}
