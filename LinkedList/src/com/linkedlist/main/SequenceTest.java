@@ -7,7 +7,7 @@ package com.linkedlist.main;
  * 
  * Description:
  * 	SequenceTest is a class used to test the functionality
- * of DoubleArraySeq.
+ * of DoubleLinkedSeq.
  *
  */
 public class SequenceTest
@@ -15,12 +15,12 @@ public class SequenceTest
 	/****************************
 	 * Sequences
 	 ***************************/
-	private DoubleArraySeq sq1 = null;
-	private DoubleArraySeq sq2 = null;
-	private DoubleArraySeq sq3 = null;
+	private DoubleLinkedSeq sq1 = null;
+	private DoubleLinkedSeq sq2 = null;
+	private DoubleLinkedSeq sq3 = null;
 	
 	// A pointer variable 
-	private DoubleArraySeq currentSeq = null;
+	private DoubleLinkedSeq currentSeq = null;
 	
 	// Menu prints for ease of use
 	private final String [] MENU_CHOICE = {"",
@@ -64,18 +64,18 @@ public class SequenceTest
 	/**
 	 * Create a new sequence and handle which one is current.
 	 * @param doubleTokens - the array of sequence data
-	 * @return DoubleArraySeq - the new sequence
+	 * @return DoubleLinkedSeq - the new sequence
 	 */
-	private DoubleArraySeq createSequence(double[] doubleTokens)
+	private DoubleLinkedSeq createSequence(double[] doubleTokens)
 	{
 		if (sq1 == null && sq2 == null) // If there are no sequences yet created, create sq1
 		{
-			sq1 = new DoubleArraySeq(doubleTokens.length - 1);
+			sq1 = new DoubleLinkedSeq(doubleTokens.length - 1);
 			return sq1;
 		}
 		else if (sq1 != null && sq2 == null) // If sq1 is created but sq2 is not, create sq2
 		{
-			sq2 = new DoubleArraySeq(doubleTokens.length - 1);
+			sq2 = new DoubleLinkedSeq(doubleTokens.length - 1);
 			return sq2;
 		}
 		else
@@ -338,7 +338,7 @@ public class SequenceTest
 	 * @param seq - the sequence to print about
 	 * @param doubleTokensArray - the array of double data elements
 	 */
-	public void printSequence(DoubleArraySeq seq, double[] doubleTokensArray)
+	public void printSequence(DoubleLinkedSeq seq, double[] doubleTokensArray)
 	{
 		// Print a custom message depending on the menu choice
 		switch((int)doubleTokensArray[0])
