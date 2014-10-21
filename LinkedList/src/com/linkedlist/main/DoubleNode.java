@@ -123,11 +123,11 @@ public class DoubleNode
    * @exception OutOfMemoryError
    *   Indicates that there is insufficient memory for the new list.   
    **/
-   public static DoubleNode[ ] listCopyWithTail(DoubleNode source)
+   public static DoubleNode[] listCopyWithTail(DoubleNode source)
    {
       DoubleNode copyHead;
       DoubleNode copyTail;
-      DoubleNode[ ] answer = new DoubleNode[2];
+      DoubleNode[] answer = new DoubleNode[2];
      
       // Handle the special case of the empty list.   
       if (source == null)
@@ -200,7 +200,7 @@ public class DoubleNode
       DoubleNode copyHead;
       DoubleNode copyTail;
       DoubleNode cursor;
-      DoubleNode[ ] answer = new DoubleNode[2];
+      DoubleNode[] answer = new DoubleNode[2];
       
       // Make the first node for the newly created list. Notice that this will
       // cause a NullPointerException if start is null.
@@ -292,7 +292,7 @@ public class DoubleNode
    *   Indicates that this was the tail node of the list, so there is nothing
    *   after it to remove.
    **/
-   public void removeNodeAfter( )   
+   public void removeNodeAfter()   
    {
       link = link.link;
    }          
