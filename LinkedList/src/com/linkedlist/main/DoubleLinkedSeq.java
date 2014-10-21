@@ -193,4 +193,108 @@ public class DoubleLinkedSeq implements Cloneable
    {
       
    }
+   
+	/**
+	 * Add the specified element to the front of this sequence.
+	 * @param element - the element to add to the front
+	 */
+	public void addToFront(double element)
+	{
+		// Ensure the array is big enough for the new element
+		if(manyItems == data.length)
+			ensureCapacity(manyItems + 1);
+		
+		// Set the index to the beginning of the sequence
+		currentIndex = 0;
+		
+		// Shift all the data to the right
+		for(int i = manyItems; i > currentIndex; i--)
+			data[i] = data[i-1];
+		
+		// Add the new element
+		data[currentIndex] = element;
+		manyItems++;
+		currentIndex = 0;
+	}
+	
+	/**
+	 * Remove the element at the front of this sequence.
+	 */
+	public void removeFromFront()
+	{
+		if (manyItems == 0)
+			throw new IndexOutOfBoundsException("The sequence is empty.");
+		
+		// Shift all the data after the current index to the right
+		for(int i = 0; i < manyItems - 1; i++)
+		{
+			try
+			{
+				data[i] = data[i + 1];
+			}
+			catch(ArrayIndexOutOfBoundsException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		
+		data[manyItems-- - 1] = 0;
+		currentIndex = 0;
+	}
+	
+	/**
+	 * Add the specified element to the end of this sequence.
+	 * @param element - the element to add to the end
+	 */
+	public void addToEnd(double element)
+	{
+		// Ensure the array is big enough for the new element
+		if(manyItems == data.length)
+			ensureCapacity(manyItems + 1);
+		
+		// Add the new element
+		data[manyItems] = element;
+		manyItems++;
+		currentIndex = manyItems - 1;
+	}
+	
+	/**
+	 * Change the element at the end of this sequence
+	 * to the element located at the current index.
+	 */
+	public void endToCurrent()
+	{
+		if (isCurrent())
+			data[size() - 1] = getCurrent();
+		else
+			throw new IllegalStateException("There is no current element.");
+	}
+	
+	/**
+	 * Get the element located at the specified index.
+	 * @param index - the index to obtain the element from
+	 * @return double - the element located at the specified index
+	 */
+	public double getElement(int index)
+	{
+		currentIndex = index;
+		
+		if (isCurrent())
+			return data[index];
+		else
+			throw new IllegalStateException("There is no element at " + index + ".");
+	}
+	
+	/**
+	 * Change the element at the specified index
+	 * to the element located at the current index.
+	 * @param index - the index at which to change the element
+	 */
+	public void elementToCurrent(int index)
+	{
+		if (isCurrent())
+			data[index] = getCurrent();
+		else
+			throw new IllegalStateException("There is no current element.");
+	}
 }

@@ -70,12 +70,12 @@ public class SequenceTest
 	{
 		if (sq1 == null && sq2 == null) // If there are no sequences yet created, create sq1
 		{
-			sq1 = new DoubleLinkedSeq(doubleTokens.length - 1);
+			sq1 = new DoubleLinkedSeq();
 			return sq1;
 		}
 		else if (sq1 != null && sq2 == null) // If sq1 is created but sq2 is not, create sq2
 		{
-			sq2 = new DoubleLinkedSeq(doubleTokens.length - 1);
+			sq2 = new DoubleLinkedSeq();
 			return sq2;
 		}
 		else
