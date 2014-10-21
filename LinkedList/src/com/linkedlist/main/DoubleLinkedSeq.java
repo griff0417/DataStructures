@@ -150,9 +150,9 @@ public class DoubleLinkedSeq implements Cloneable
    * @return
    *   true (there is a current element) or false (there is no current element at the moment)
    **/
-   public double isCurrent( )
+   public boolean isCurrent( )
    {
-      return 0;
+      return true;
    }
               
    /**
