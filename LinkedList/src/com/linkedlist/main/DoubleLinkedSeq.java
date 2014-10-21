@@ -19,7 +19,7 @@ public class DoubleLinkedSeq implements Cloneable
    **/   
    public DoubleLinkedSeq()
    {
-   Hello   
+  
    }
  
    /**
