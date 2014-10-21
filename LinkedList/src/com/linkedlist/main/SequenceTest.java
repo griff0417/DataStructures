@@ -13,7 +13,7 @@ package com.linkedlist.main;
 public class SequenceTest
 {
 	/****************************
-	 * Sequences
+	 * Sequences 
 	 ***************************/
 	private DoubleLinkedSeq sq1 = null;
 	private DoubleLinkedSeq sq2 = null;
