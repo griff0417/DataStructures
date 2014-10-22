@@ -16,10 +16,21 @@ public class DoubleLinkedSeq implements Cloneable
    * Initialize an empty sequence.
    * Postcondition:
    *   This sequence is empty.
-   **/   
+   **/ 
+	
+	private int manyNodes;
+	private DoubleNode head;
+	private DoubleNode tail;
+	private DoubleNode cursor;
+	
+	
    public DoubleLinkedSeq()
    {
-   
+	   this.manyNodes=0;
+	   this.head=null;
+	   this.tail=null;
+	   this.cursor=null;
+	
    }
  
    /**
@@ -36,6 +47,7 @@ public class DoubleLinkedSeq implements Cloneable
    **/
    public void addAfter(double element)
    {
+	   
       
    }
 
