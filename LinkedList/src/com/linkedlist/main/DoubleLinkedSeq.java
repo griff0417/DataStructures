@@ -50,11 +50,13 @@ public class DoubleLinkedSeq implements Cloneable
 	   {
 		   cursor.addNodeAfter(element);
 		   cursor = cursor.getLink();
+		   manyNodes++;
 	   }
 	   else
 	   {
 		   tail.setLink(new DoubleNode(element, null));
 		   tail = tail.getLink();
+		   manyNodes++;
 	   }
    }
 
@@ -72,17 +74,20 @@ public class DoubleLinkedSeq implements Cloneable
    **/
    public void addBefore(double element)
    {
-      if (isCurrent()){
+	  // If there is a current element
+      if (isCurrent())
+      {
     	 precursorReturn().addNodeAfter(element);
     	 cursor = precursorReturn().getLink();
+    	 manyNodes++;
       }
-   
-      else{
-    	  head.setLink(new DoubleNode(element,head.getLink()));
+      else
+      {
+    	  head.setLink(new DoubleNode(element, head.getLink()));
     	  cursor = head.getLink();
+    	  manyNodes++;
       }
    }
-   
    
    /**
    * Place the contents of another sequence at the end of this sequence.
@@ -101,7 +106,14 @@ public class DoubleLinkedSeq implements Cloneable
    **/
    public void addAll(DoubleLinkedSeq addend)
    {
-      
+      if (addend != null)
+      {
+    	  DoubleNode addHead = DoubleNode.listCopy(addend.head);
+    	  tail.setLink(addHead.getLink());
+    	  manyNodes += addend.size();
+      }
+      else
+    	  throw new NullPointerException("The sequence to add is null.");
    }   
    
    /**
@@ -340,15 +352,24 @@ public class DoubleLinkedSeq implements Cloneable
 			throw new IllegalStateException("There is no current element.");
 	}
 	
-	public DoubleNode precursorReturn(){
+	/**
+	 * Get the precursor of this sequence.
+	 * @return DoubleNode -  the precursor
+	 */
+	public DoubleNode precursorReturn()
+	{
 		DoubleNode savedCursor = cursor;
 		DoubleNode savedPreCursor = null;
-		for (start();isCurrent();advance()){
-			if (cursor == savedCursor){
+		
+		for (start(); isCurrent(); advance())
+		{
+			if (cursor == savedCursor)
+			{
 				return savedPreCursor;
 			}
-			savedPreCursor=cursor;
-		}		
+			savedPreCursor = cursor;
+		}
+		
 		return null;
 	}
 }
