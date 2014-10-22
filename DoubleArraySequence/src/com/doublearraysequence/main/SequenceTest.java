@@ -271,7 +271,7 @@ public class SequenceTest
 							break;
 							
 						case 2:
-							currentSeq = sq2;
+							currentSeq = sq3;
 							printOutput(line, doubleTokensArray, false, "");
 							break;
 							
@@ -423,7 +423,7 @@ public class SequenceTest
 				break;
 				
 			case 11:
-				currentSeq = sq2;
+				currentSeq = sq3;
 				break;
 				
 			case 12:
