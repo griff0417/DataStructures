@@ -45,7 +45,17 @@ public class DoubleLinkedSeq implements Cloneable
    **/
    public void addAfter(double element)
    {
-	     
+	   // If there is a current element
+	   if (isCurrent())
+	   {
+		   cursor.addNodeAfter(element);
+		   cursor = cursor.getLink();
+	   }
+	   else
+	   {
+		   tail.setLink(new DoubleNode(element, null));
+		   tail = tail.getLink();
+	   }
    }
 
    /**
@@ -62,8 +72,16 @@ public class DoubleLinkedSeq implements Cloneable
    **/
    public void addBefore(double element)
    {
-      
+      if (isCurrent()){
+    	 precursorReturn().addNodeAfter(element);
+    	 cursor = precursorReturn().getLink();
+      }
+   
+      else{
+    	  head.setLink(new DoubleNode(element,link));
+      }
    }
+   
    
    /**
    * Place the contents of another sequence at the end of this sequence.
@@ -319,5 +337,17 @@ public class DoubleLinkedSeq implements Cloneable
 			data[index] = element;
 		else
 			throw new IllegalStateException("There is no current element.");
+	}
+	
+	public DoubleNode precursorReturn(){
+		DoubleNode savedCursor = cursor;
+		DoubleNode savedPreCursor = null;
+		for (start();isCurrent();advance()){
+			if (cursor == savedCursor){
+				return savedPreCursor;
+			}
+			savedPreCursor=cursor;
+		}		
+		return null;
 	}
 }
