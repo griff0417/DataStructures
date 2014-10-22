@@ -1,5 +1,7 @@
 package com.linkedlist.main;
 
+import com.DoubleLinkedSequence.main.DoubleLinkedSeq;
+
 /******************************************************************************
 * A DoubleLinkedSeq is a collection of double numbers.
 * The sequence can have a special "current element," which is specified and 
@@ -132,7 +134,12 @@ public class DoubleLinkedSeq implements Cloneable
    **/
    public void advance( )
    {
-      
+	   if (isCurrent()){
+		   cursor = cursor.getLink();
+	   }
+	   else{
+		   throw new IllegalStateException();
+	   }
    }
    
    /**
@@ -146,7 +153,28 @@ public class DoubleLinkedSeq implements Cloneable
    **/ 
    public DoubleLinkedSeq clone( )
    {  
-      return null;
+		// Clone a DoubleLinkedSeq object.
+	    DoubleLinkedSeq answer;
+	      
+	    try
+	    {
+	       answer = (DoubleLinkedSeq) super.clone( );
+	    }
+	    catch (CloneNotSupportedException e)
+	    {
+	    	
+	        // This exception should not occur. But if it does, it would probably
+	        // indicate a programming error that made super.clone unavailable.
+	        // The most common error would be forgetting the "Implements Cloneable"
+	        // clause at the start of this class.
+	        throw new RuntimeException
+	        ("This class does not implement Cloneable");
+	    }
+	      
+	    answer.head = head.clone( );
+	    answer.start();
+	      
+	    return answer;
    }
    
    /**

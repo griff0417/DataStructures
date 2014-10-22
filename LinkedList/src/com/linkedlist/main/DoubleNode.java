@@ -13,7 +13,7 @@ package com.linkedlist.main;
 *
 * @version Oct. 21, 2014
 ******************************************************************************/
-public class DoubleNode
+public class DoubleNode implements Cloneable
 {
    private double data;
    private DoubleNode link;   
@@ -323,4 +323,6 @@ public class DoubleNode
    {                    
       link = newLink;
    }
+   
+ 
 }
