@@ -1,7 +1,5 @@
 package com.linkedlist.main;
 
-import com.DoubleLinkedSequence.main.DoubleLinkedSeq;
-
 /******************************************************************************
 * A DoubleLinkedSeq is a collection of double numbers.
 * The sequence can have a special "current element," which is specified and 
@@ -151,14 +149,14 @@ public class DoubleLinkedSeq implements Cloneable
    * @exception OutOfMemoryError
    *   Indicates insufficient memory for creating the clone.
    **/ 
-   public DoubleLinkedSeq clone( )
+   public DoubleLinkedSeq clone()
    {  
 		// Clone a DoubleLinkedSeq object.
 	    DoubleLinkedSeq answer;
 	      
 	    try
 	    {
-	       answer = (DoubleLinkedSeq) super.clone( );
+	       answer = (DoubleLinkedSeq) super.clone();
 	    }
 	    catch (CloneNotSupportedException e)
 	    {
@@ -170,9 +168,62 @@ public class DoubleLinkedSeq implements Cloneable
 	        throw new RuntimeException
 	        ("This class does not implement Cloneable");
 	    }
-	      
-	    answer.head = head.clone( );
-	    answer.start();
+	    
+	    // If the original sequence has no current element
+	    if (!isCurrent())
+	    {
+	    	 try
+	 	    {
+	 	    	DoubleNode[] nodes = DoubleNode.listCopyWithTail(head);
+	 	    	answer.head = nodes[0];
+	 		    answer.tail = nodes[1];
+	 		    answer.cursor = null;
+	 		    answer.manyNodes = manyNodes;
+	 	    }
+	 	    catch (OutOfMemoryError e)
+	 	    {
+	 	    	throw new OutOfMemoryError
+	 	        ("Out of memory");
+	 	    }
+	    }
+	    // If the original sequence's current element is the first element
+	    else if (cursor == head.getLink())
+	    {
+	    	 try
+	 	    {
+	 	    	DoubleNode[] nodes = DoubleNode.listCopyWithTail(head);
+	 	    	answer.head = nodes[0];
+	 		    answer.tail = nodes[1];
+	 		    answer.cursor = nodes[0];
+	 		    answer.manyNodes = manyNodes;
+	 	    }
+	 	    catch (OutOfMemoryError e)
+	 	    {
+	 	    	throw new OutOfMemoryError
+	 	        ("Out of memory");
+	 	    }
+	    }
+	    // If the original sequence's current element is after the first element
+	    else if (cursor != head 
+	    		&& cursor != head.getLink() 
+	    		&& cursor != head.getLink().getLink())
+	    {
+	    	 try
+	 	    {
+	 	    	DoubleNode[] part1 = DoubleNode.listPart(head, cursor);
+	 	    	DoubleNode[] part2 = DoubleNode.listPart(cursor.getLink(), tail);
+	 	    	answer.head = part1[0];
+	 	    	part1[1].setLink(part2[0]);
+	 	    	answer.tail = part2[1];
+	 	    	answer.cursor = part1[1];
+	 	    	answer.manyNodes = manyNodes;
+	 	    }
+	 	    catch (OutOfMemoryError e)
+	 	    {
+	 	    	throw new OutOfMemoryError
+	 	        ("Out of memory");
+	 	    }
+	    }
 	      
 	    return answer;
    }

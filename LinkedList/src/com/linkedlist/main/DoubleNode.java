@@ -127,7 +127,7 @@ public class DoubleNode implements Cloneable
    {
       DoubleNode copyHead;
       DoubleNode copyTail;
-      DoubleNode[] answer = new DoubleNode[2];
+      DoubleNode[] answer = new DoubleNode[3];
      
       // Handle the special case of the empty list.   
       if (source == null)
@@ -140,9 +140,9 @@ public class DoubleNode implements Cloneable
       // Make the rest of the nodes for the newly created list.
       while (source.link != null)
       {
-         source = source.link;
-         copyTail.addNodeAfter(source.data);
-         copyTail = copyTail.link;
+          source = source.link;
+          copyTail.addNodeAfter(source.data);
+          copyTail = copyTail.link;
       }
       
       // Return the head and tail references.
