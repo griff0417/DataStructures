@@ -132,12 +132,10 @@ public class DoubleLinkedSeq implements Cloneable
    **/
    public void advance( )
    {
-	   if (isCurrent()){
+	   if (isCurrent())
 		   cursor = cursor.getLink();
-	   }
-	   else{
+	   else
 		   throw new IllegalStateException();
-	   }
    }
    
    /**
@@ -245,7 +243,39 @@ public class DoubleLinkedSeq implements Cloneable
    **/   
    public static DoubleLinkedSeq catenation(DoubleLinkedSeq s1, DoubleLinkedSeq s2)
    {
-      return null;
+	   DoubleLinkedSeq objReturn;
+	   
+	  try
+	  {
+		  if (s1.isCurrent() && s2.isCurrent())
+		  {
+			  try
+			  {
+				  objReturn = new DoubleLinkedSeq();
+			  }
+			  catch (OutOfMemoryError e)
+			  {
+				  throw new OutOfMemoryError();
+			  }
+			   
+			   DoubleNode[] s1Nodes = DoubleNode.listCopyWithTail(s1.head);
+			   DoubleNode[] s2Nodes = DoubleNode.listCopyWithTail(s2.head);
+			   s1Nodes[1].setLink(s2Nodes[0].getLink());
+			   
+			   objReturn.head = s1Nodes[0];
+			   objReturn.tail = s2Nodes[1];
+			   objReturn.cursor = s1Nodes[0];
+			   objReturn.manyNodes = s1.manyNodes + s2.manyNodes;
+			   
+			   return objReturn;
+		  }
+	  }
+	  catch (NullPointerException e)
+	  {
+		  System.out.println(e);
+	  }
+	  
+	  return null;
    }
 
    /**
@@ -259,7 +289,12 @@ public class DoubleLinkedSeq implements Cloneable
    **/
    public double getCurrent( )
    {
-      return 0;
+	   if (isCurrent())
+	   {
+		   return cursor.getData();
+	   }
+	   else
+		   throw new IllegalStateException();
    }
    
    /**
@@ -271,7 +306,10 @@ public class DoubleLinkedSeq implements Cloneable
    **/
    public boolean isCurrent( )
    {
-      return true;
+	   if (cursor != null && cursor.getLink() != head)
+		   return true;
+	   
+       return false;
    }
               
    /**
@@ -289,7 +327,15 @@ public class DoubleLinkedSeq implements Cloneable
    **/
    public void removeCurrent( )
    {
-      
+	   if (isCurrent())
+	   {
+		   DoubleNode preCursor = precursorReturn();
+		   preCursor.setLink(cursor.getLink());
+		   cursor = cursor.getLink();
+		   manyNodes--;
+	   }
+	   else
+		   throw new IllegalStateException();
    }
                  
    /**
@@ -297,8 +343,8 @@ public class DoubleLinkedSeq implements Cloneable
    * @return the number of elements in this sequence
    **/ 
    public int size( )
-   {
-      return 0;
+   { 
+       return manyNodes;
    }
    
    /**
@@ -310,7 +356,7 @@ public class DoubleLinkedSeq implements Cloneable
    **/ 
    public void start( )
    {
-      
+	   cursor = head; 
    }
    
 	/**
@@ -319,21 +365,9 @@ public class DoubleLinkedSeq implements Cloneable
 	 */
 	public void addToFront(double element)
 	{
-		// Ensure the array is big enough for the new element
-		if(manyItems == data.length)
-			ensureCapacity(manyItems + 1);
-		
-		// Set the index to the beginning of the sequence
-		currentIndex = 0;
-		
-		// Shift all the data to the right
-		for(int i = manyItems; i > currentIndex; i--)
-			data[i] = data[i-1];
-		
-		// Add the new element
-		data[currentIndex] = element;
-		manyItems++;
-		currentIndex = 0;
+		head.setLink(new DoubleNode(element, head.getLink()));
+  	  	cursor = head.getLink();
+  	  	manyNodes++;
 	}
 	
 	/**
@@ -341,24 +375,9 @@ public class DoubleLinkedSeq implements Cloneable
 	 */
 	public void removeFromFront()
 	{
-		if (manyItems == 0)
-			throw new IndexOutOfBoundsException("The sequence is empty.");
-		
-		// Shift all the data after the current index to the right
-		for(int i = 0; i < manyItems - 1; i++)
-		{
-			try
-			{
-				data[i] = data[i + 1];
-			}
-			catch(ArrayIndexOutOfBoundsException e)
-			{
-				e.printStackTrace();
-			}
-		}
-		
-		data[manyItems-- - 1] = 0;
-		currentIndex = 0;
+	    head.setLink(head.getLink().getLink());
+	    cursor = head.getLink();
+	    manyNodes--;
 	}
 	
 	/**
@@ -367,14 +386,9 @@ public class DoubleLinkedSeq implements Cloneable
 	 */
 	public void addToEnd(double element)
 	{
-		// Ensure the array is big enough for the new element
-		if(manyItems == data.length)
-			ensureCapacity(manyItems + 1);
-		
-		// Add the new element
-		data[manyItems] = element;
-		manyItems++;
-		currentIndex = manyItems - 1;
+		tail.setLink(new DoubleNode(element, null));
+		tail = tail.getLink();
+		manyNodes++;
 	}
 	
 	/**
@@ -384,7 +398,7 @@ public class DoubleLinkedSeq implements Cloneable
 	public void endToCurrent()
 	{
 		if (isCurrent())
-			data[size() - 1] = getCurrent();
+			tail.setData(getCurrent());
 		else
 			throw new IllegalStateException("There is no current element.");
 	}
@@ -396,12 +410,21 @@ public class DoubleLinkedSeq implements Cloneable
 	 */
 	public double getElement(int index)
 	{
-		currentIndex = index;
+		DoubleNode tempNode = head.getLink();
 		
-		if (isCurrent())
-			return data[index];
-		else
-			throw new IllegalStateException("There is no element at " + index + ".");
+		for (int x = 0; x == index; x++)
+		{
+			try
+			{
+				tempNode = tempNode.getLink();
+			}
+			catch (IllegalStateException e)
+			{
+				throw new IllegalStateException();
+			}
+		}
+		
+		return tempNode.getData();
 	}
 	
 	/**
@@ -433,7 +456,7 @@ public class DoubleLinkedSeq implements Cloneable
 	
 	/**
 	 * Get the precursor of this sequence.
-	 * @return DoubleNode -  the precursor
+	 * @return DoubleNode - the precursor
 	 */
 	public DoubleNode precursorReturn()
 	{
