@@ -418,7 +418,7 @@ public class SequenceTest
 		// Reset the current sequence appropriately
 		switch((int)doubleTokensArray[0])
 		{
-			case 10:
+			case 10: 
 				currentSeq = sq2;
 				break;
 				
