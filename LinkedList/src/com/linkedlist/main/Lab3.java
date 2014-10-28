@@ -36,6 +36,8 @@ public class Lab3
 		{
 			e.printStackTrace();
 		}
+		
+		
 		// Read through the input file while
 		// there is still information in it
 		while(scanner.hasNextLine())
