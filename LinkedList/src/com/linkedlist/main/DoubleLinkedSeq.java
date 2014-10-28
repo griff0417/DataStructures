@@ -434,8 +434,22 @@ public class DoubleLinkedSeq implements Cloneable
 	 */
 	public void elementToCurrent(int index)
 	{
-		if (isCurrent())
-			data[index] = getCurrent();
+		if (isCurrent()){
+			DoubleNode tempNode = head.getLink();
+		
+			for (int x = 0; x == index; x++)
+			{
+				try
+				{
+					tempNode = tempNode.getLink();
+				}
+				catch (IllegalStateException e)
+				{
+					throw new IllegalStateException();
+				}
+			}
+			tempNode.setData(cursor.getData());
+		}
 		else
 			throw new IllegalStateException("There is no current element.");
 	}
