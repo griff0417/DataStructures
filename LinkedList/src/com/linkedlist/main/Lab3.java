@@ -38,7 +38,7 @@ public class Lab3
 		}
 		
 		
-		// Read through the input file while
+		// Read through the inpu t file while
 		// there is still information in it
 		while(scanner.hasNextLine())
 		{

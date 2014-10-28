@@ -427,7 +427,7 @@ public class DoubleLinkedSeq implements Cloneable
 	 * @return double - the element located at the specified index
 	 */
 	public double getElement(int index)
-	{
+	{ 
 		DoubleNode tempNode = head.getLink();
 		
 		for (int x = 0; x == index; x++)

@@ -51,7 +51,7 @@ public class DoubleNode implements Cloneable
    public void addNodeAfter(double item)   
    {
       link = new DoubleNode(item, link);
-   }          
+   }           
    
    /**
    * Accessor method to get the data from this node.
