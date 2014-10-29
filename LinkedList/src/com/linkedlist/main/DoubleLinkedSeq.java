@@ -128,6 +128,10 @@ public class DoubleLinkedSeq implements Cloneable
     	  DoubleNode addHead = DoubleNode.listCopy(addend.head);
     	  tail.setLink(addHead.getLink());
     	  manyNodes += addend.size();
+    	  while(cursor.getLink() != null){
+    		advance();  
+    	  }
+      tail = cursor;
       }
       else
     	  throw new NullPointerException("The sequence to add is null.");
@@ -209,7 +213,7 @@ public class DoubleLinkedSeq implements Cloneable
 	 	    	DoubleNode[] nodes = DoubleNode.listCopyWithTail(head);
 	 	    	answer.head = nodes[0];
 	 		    answer.tail = nodes[1];
-	 		    answer.cursor = nodes[0];
+	 		    answer.cursor = nodes[0].getLink();
 	 		    answer.manyNodes = manyNodes;
 	 	    }
 	 	    catch (OutOfMemoryError e)
@@ -218,10 +222,19 @@ public class DoubleLinkedSeq implements Cloneable
 	 	        ("Out of memory");
 	 	    }
 	    }
+	    // If the current element equals tail
+	    else if (cursor == tail)
+	    {
+	    	DoubleNode[] nodes = DoubleNode.listCopyWithTail(head);
+	    	answer.head = nodes[0];
+	    	answer.tail = nodes[1];
+	    	answer.cursor = nodes[0].getLink();
+	    	answer.manyNodes = manyNodes;
+	    }
 	    // If the original sequence's current element is after the first element
 	    else if (cursor != head 
-	    		&& cursor != head.getLink() 
-	    		&& cursor != head.getLink().getLink())
+	    		&& cursor != head.getLink()
+	    		&& cursor != tail)
 	    {
 	    	 try
 	 	    {
@@ -430,18 +443,19 @@ public class DoubleLinkedSeq implements Cloneable
 	{ 
 		DoubleNode tempNode = head.getLink();
 		
-		for (int x = 0; x == index; x++)
+		for (int x = 0; x < index; x++)
 		{
 			try
 			{
 				tempNode = tempNode.getLink();
+				
 			}
 			catch (IllegalStateException e)
 			{
 				throw new IllegalStateException();
 			}
 		}
-		
+		cursor = tempNode;
 		return tempNode.getData();
 	}
 	
@@ -456,7 +470,7 @@ public class DoubleLinkedSeq implements Cloneable
 		{
 			DoubleNode tempNode = head.getLink();
 		
-			for (int x = 0; x == index; x++)
+			for (int x = 0; x < index; x++)
 			{
 				try
 				{
@@ -486,7 +500,7 @@ public class DoubleLinkedSeq implements Cloneable
 		{
 			DoubleNode tempNode = head.getLink();
 		
-			for (int x = 0; x == index; x++)
+			for (int x = 0; x < index; x++)
 			{
 				try
 				{
