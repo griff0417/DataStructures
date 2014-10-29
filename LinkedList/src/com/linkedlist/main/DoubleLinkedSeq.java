@@ -19,14 +19,14 @@ public class DoubleLinkedSeq implements Cloneable
    **/ 
    
    private int manyNodes;
-   private DoubleNode head;
-   private DoubleNode tail;
-   private DoubleNode cursor;
+   private Node head;
+   private Node tail;
+   private Node cursor;
 	
    public DoubleLinkedSeq()
    { 
 	   this.manyNodes = 0;
-	   this.head = new DoubleNode(0, null);
+	   this.head = null;
 	   this.tail = null;
 	   this.cursor = null;
    }
@@ -50,28 +50,29 @@ public class DoubleLinkedSeq implements Cloneable
 	   {
 		   if (cursor == tail)
 		   {
-			   tail.addNodeAfter(element);
+			   addNodeAfter(tail, element);
 			   tail = tail.getLink();
 			   cursor = tail;
 			   manyNodes++;
 		   }
 		   else
 		   {
-			   cursor.addNodeAfter(element);
+			   addNodeAfter(cursor, element);
 			   cursor = cursor.getLink();
 			   manyNodes++;
 		   }
 	   }
-	   else if (tail==null)
+	   else if (tail == null)
 	   {
-		   tail = new DoubleNode(element, null);
+		   head = new Node(0, null);
+		   tail = new Node(element, null);
 		   cursor = tail;
 		   head.setLink(cursor);
 		   manyNodes++;
 	   }
 	   else
 	   {
-		   tail.setLink(new DoubleNode(element, null));
+		   tail.setLink(new Node(element, null));
 		   tail = tail.getLink();
 		   manyNodes++;
 	   }
@@ -94,13 +95,13 @@ public class DoubleLinkedSeq implements Cloneable
 	  // If there is a current element
       if (isCurrent())
       {
-    	 precursorReturn().addNodeAfter(element);
+    	 addNodeAfter(precursorReturn(), element);
     	 cursor = precursorReturn();
     	 manyNodes++;
       }
       else
       {
-    	  head.setLink(new DoubleNode(element, head.getLink()));
+    	  head.setLink(new Node(element, head.getLink()));
     	  cursor = head.getLink();
     	  manyNodes++;
       }
@@ -125,7 +126,7 @@ public class DoubleLinkedSeq implements Cloneable
    {
       if (addend != null)
       {
-    	  DoubleNode addHead = DoubleNode.listCopy(addend.head);
+    	  Node addHead = listCopy(addend.head);
     	  tail.setLink(addHead.getLink());
     	  manyNodes += addend.size();
     	  while(cursor.getLink() != null){
@@ -193,7 +194,7 @@ public class DoubleLinkedSeq implements Cloneable
 	    {
 	    	 try
 	 	    {
-	 	    	DoubleNode[] nodes = DoubleNode.listCopyWithTail(head);
+	 	    	Node[] nodes = listCopyWithTail(head);
 	 	    	answer.head = nodes[0];
 	 		    answer.tail = nodes[1];
 	 		    answer.cursor = null;
@@ -210,7 +211,7 @@ public class DoubleLinkedSeq implements Cloneable
 	    {
 	    	 try
 	 	    {
-	 	    	DoubleNode[] nodes = DoubleNode.listCopyWithTail(head);
+	 	    	Node[] nodes = listCopyWithTail(head);
 	 	    	answer.head = nodes[0];
 	 		    answer.tail = nodes[1];
 	 		    answer.cursor = nodes[0].getLink();
@@ -225,7 +226,7 @@ public class DoubleLinkedSeq implements Cloneable
 	    // If the current element equals tail
 	    else if (cursor == tail)
 	    {
-	    	DoubleNode[] nodes = DoubleNode.listCopyWithTail(head);
+	    	Node[] nodes = listCopyWithTail(head);
 	    	answer.head = nodes[0];
 	    	answer.tail = nodes[1];
 	    	answer.cursor = nodes[0].getLink();
@@ -238,8 +239,8 @@ public class DoubleLinkedSeq implements Cloneable
 	    {
 	    	 try
 	 	    {
-	 	    	DoubleNode[] part1 = DoubleNode.listPart(head, cursor);
-	 	    	DoubleNode[] part2 = DoubleNode.listPart(cursor.getLink(), tail);
+	 	    	Node[] part1 = listPart(head, cursor);
+	 	    	Node[] part2 = listPart(cursor.getLink(), tail);
 	 	    	answer.head = part1[0];
 	 	    	part1[1].setLink(part2[0]);
 	 	    	answer.tail = part2[1];
@@ -288,8 +289,64 @@ public class DoubleLinkedSeq implements Cloneable
 				  throw new OutOfMemoryError();
 			  }
 			   
-			   DoubleNode[] s1Nodes = DoubleNode.listCopyWithTail(s1.head);
-			   DoubleNode[] s2Nodes = DoubleNode.listCopyWithTail(s2.head);
+			  Node[] s1Nodes;
+			   
+			  Node copyHead;
+		      Node copyTail;
+		      Node[] answer = new Node[3];
+		      Node source = s1.head;
+		     
+		      // Handle the special case of the empty list.   
+		      if (source == null)
+		         return null; 
+		      
+		      // Make the first node for the newly created list.
+		      copyHead = new Node(source.getData(), null);
+		      copyTail = copyHead;
+		      
+		      // Make the rest of the nodes for the newly created list.
+		      while (source.getLink() != null)
+		      {
+		          source = source.getLink();
+		          copyTail.setLink(new Node(source.getData(), copyTail.getLink()));
+		          copyTail = copyTail.getLink();
+		      }
+		      
+		      // Return the head and tail references.
+		      answer[0] = copyHead;
+		      answer[1] = copyTail;
+		      
+			  s1Nodes = answer; 
+		      
+			   Node[] s2Nodes;
+			  
+			  Node copyHead2;
+		      Node copyTail2;
+		      Node[] answer2 = new Node[3];
+		      Node source2 = s2.head;
+		     
+		      // Handle the special case of the empty list.   
+		      if (source2 == null)
+		         return null; 
+		      
+		      // Make the first node for the newly created list.
+		      copyHead2 = new Node(source2.getData(), null);
+		      copyTail2 = copyHead2;
+		      
+		      // Make the rest of the nodes for the newly created list.
+		      while (source2.getLink() != null)
+		      {
+		          source2 = source2.getLink();
+		          copyTail2.setLink(new Node(source2.getData(), copyTail2.getLink()));
+		          copyTail2 = copyTail2.getLink();
+		      }
+		      
+		      // Return the head and tail references.
+		      answer2[0] = copyHead2;
+		      answer2[1] = copyTail2;
+		      
+		      s2Nodes = answer2;
+			  
 			   s1Nodes[1].setLink(s2Nodes[0].getLink());
 			   
 			   objReturn.head = s1Nodes[0];
@@ -359,7 +416,7 @@ public class DoubleLinkedSeq implements Cloneable
    {
 	   if (isCurrent())
 	   {
-		   DoubleNode preCursor = precursorReturn();
+		   Node preCursor = precursorReturn();
 		   preCursor.setLink(cursor.getLink());
 		   cursor = cursor.getLink();
 		   manyNodes--;
@@ -395,7 +452,7 @@ public class DoubleLinkedSeq implements Cloneable
 	 */
 	public void addToFront(double element)
 	{
-		head.setLink(new DoubleNode(element, head.getLink()));
+		head.setLink(new Node(element, head.getLink()));
   	  	cursor = head.getLink();
   	  	manyNodes++;
 	}
@@ -416,7 +473,7 @@ public class DoubleLinkedSeq implements Cloneable
 	 */
 	public void addToEnd(double element)
 	{
-		tail.setLink(new DoubleNode(element, null));
+		tail.setLink(new Node(element, null));
 		tail = tail.getLink();
 		cursor = tail;
 		manyNodes++;
@@ -441,7 +498,7 @@ public class DoubleLinkedSeq implements Cloneable
 	 */
 	public double getElement(int index)
 	{ 
-		DoubleNode tempNode = head.getLink();
+		Node tempNode = head.getLink();
 		
 		for (int x = 0; x < index; x++)
 		{
@@ -468,7 +525,7 @@ public class DoubleLinkedSeq implements Cloneable
 	{
 		if (isCurrent())
 		{
-			DoubleNode tempNode = head.getLink();
+			Node tempNode = head.getLink();
 		
 			for (int x = 0; x < index; x++)
 			{
@@ -498,7 +555,7 @@ public class DoubleLinkedSeq implements Cloneable
 	{
 		if (isCurrent())
 		{
-			DoubleNode tempNode = head.getLink();
+			Node tempNode = head.getLink();
 		
 			for (int x = 0; x < index; x++)
 			{
@@ -522,10 +579,10 @@ public class DoubleLinkedSeq implements Cloneable
 	 * Get the precursor of this sequence.
 	 * @return DoubleNode - the precursor
 	 */
-	public DoubleNode precursorReturn()
+	public Node precursorReturn()
 	{
-		DoubleNode savedCursor = cursor;
-		DoubleNode savedPreCursor = null;
+		Node savedCursor = cursor;
+		Node savedPreCursor = null;
 		
 		for (start(); isCurrent(); advance())
 		{
@@ -538,4 +595,245 @@ public class DoubleLinkedSeq implements Cloneable
 		
 		return null;
 	}
+	
+	 /**
+     * Modification method to add a new node after this node.   
+     * @param item
+     *   the data to place in the new node
+     * @postcondition
+     *   A new node has been created and placed after this node.
+     *   The data for the new node is item. Any other nodes
+     *   that used to be after this node are now after the new node.
+     * @exception OutOfMemoryError
+     *   Indicates that there is insufficient memory for a new 
+     *   DoubleNode. 
+     **/
+     public void addNodeAfter(Node node, double item)   
+     {
+        node.setLink(new Node(item, node.getLink()));
+     } 
+     
+   /**
+   * Copy a list.
+   * @param source
+   *   the head of a linked list that will be copied (which may be
+   *   an empty list in where source is null)
+   * @return
+   *   The method has made a copy of the linked list starting at 
+   *   source. The return value is the head reference for the
+   *   copy. 
+   * @exception OutOfMemoryError
+   *   Indicates that there is insufficient memory for the new list.   
+   **/ 
+   public Node listCopy(Node source)
+   {
+      Node copyHead;
+      Node copyTail;
+      
+      // Handle the special case of the empty list.
+      if (source == null)
+         return null;
+         
+      // Make the first node for the newly created list.
+      copyHead = new Node(source.getData(), null);
+      copyTail = copyHead;
+      
+      // Make the rest of the nodes for the newly created list.
+      while (source.getLink() != null)
+      {
+         source = source.getLink();
+         addNodeAfter(copyTail, source.getData());
+         copyTail = copyTail.getLink();
+      }
+ 
+      // Return the head reference for the new list.
+      return copyHead;
+   }
+   
+   /**
+   * Copy a list, returning both a head and tail reference for the copy.
+   * @param source
+   *   the head of a linked list that will be copied (which may be
+   *   an empty list in where source is null)
+   * @return
+   *   The method has made a copy of the linked list starting at 
+   *   source.  The return value is an
+   *   array where the [0] element is a head reference for the copy and the [1]
+   *   element is a tail reference for the copy.
+   * @exception OutOfMemoryError
+   *   Indicates that there is insufficient memory for the new list.   
+   **/
+   public Node[] listCopyWithTail(Node source)
+   {
+      Node copyHead;
+      Node copyTail;
+      Node[] answer = new Node[3];
+     
+      // Handle the special case of the empty list.   
+      if (source == null)
+         return answer; // The answer has two null references .
+      
+      // Make the first node for the newly created list.
+      copyHead = new Node(source.getData(), null);
+      copyTail = copyHead;
+      
+      // Make the rest of the nodes for the newly created list.
+      while (source.getLink() != null)
+      {
+          source = source.getLink();
+          addNodeAfter(copyTail, source.getData());
+          copyTail = copyTail.getLink();
+      }
+      
+      // Return the head and tail references.
+      answer[0] = copyHead;
+      answer[1] = copyTail;
+      return answer;
+   }
+   
+   /**
+   * Compute the number of nodes in a linked list.
+   * @param head
+   *   the head reference for a linked list (which may be an empty list
+   *   with a null head)
+   * @return
+   *   the number of nodes in the list with the given head    
+   **/   
+   public int listLength(Node head)
+   {
+      Node cursor;
+      int answer;
+      
+      answer = 0;
+      for (cursor = head; cursor != null; cursor = cursor.getLink())
+         answer++;
+        
+      return answer;
+   }
+   
+   /**
+   * Copy part of a list, providing a head and tail reference for the new copy. 
+   * @param start/end
+   *   references to two nodes of a linked list
+   * @param copyHead/copyTail
+   *   the method sets these to refer to the head and tail node of the new
+   *   list that is created
+   * @precondition
+   *   start and end are non-null references to nodes
+   *   on the same linked list,
+   *   with the start node at or before the end node. 
+   * @return
+   *   The method has made a copy of the part of a linked list, from the
+   *   specified start node to the specified end node. The return value is an
+   *   array where the [0] component is a head reference for the copy and the
+   *   [1] component is a tail reference for the copy.
+   * @exception IllegalArgumentException
+   *   Indicates that start and end are not references
+   *   to nodes on the same list.
+   * @exception NullPointerException
+   *   Indicates that start is null.
+   * @exception OutOfMemoryError
+   *   Indicates that there is insufficient memory for the new list.    
+   **/   
+   public Node[ ] listPart(Node start, Node end)
+   {
+      Node copyHead;
+      Node copyTail;
+      Node cursor;
+      Node[] answer = new Node[2];
+      
+      // Make the first node for the newly created list. Notice that this will
+      // cause a NullPointerException if start is null.
+      copyHead = new Node(start.getData(), null);
+      copyTail = copyHead;
+      cursor = start;
+      
+      // Make the rest of the nodes for the newly created list.
+      while (cursor != end)
+      {
+         cursor = cursor.getLink();
+         if (cursor == null)
+            throw new IllegalArgumentException
+            ("end node was not found on the list");
+         addNodeAfter(copyTail, cursor.getData());
+         copyTail = copyTail.getLink();
+      }
+      
+      // Return the head and tail references
+      answer[0] = copyHead;
+      answer[1] = copyTail;
+      return answer;
+   }        
+   
+   /**
+   * Find a node at a specified position in a linked list.
+   * @param head
+   *   the head reference for a linked list (which may be an empty list in
+   *   which case the head is null)
+   * @param position
+   *   a node number
+   * @precondition
+   *   position > 0.
+   * @return
+   *   The return value is a reference to the node at the specified position in
+   *   the list. (The head node is position 1, the next node is position 2, and
+   *   so on.) If there is no such position (because the list is too short),
+   *   then the null reference is returned.
+   * @exception IllegalArgumentException
+   *   Indicates that position is not positive.    
+   **/   
+   public Node listPosition(Node head, int position)
+   {
+      Node cursor;
+      int i;
+      
+      if (position <= 0)
+           throw new IllegalArgumentException("position is not positive");
+      
+      cursor = head;
+      for (i = 1; (i < position) && (cursor != null); i++)
+         cursor = cursor.getLink();
+
+      return cursor;
+   }
+
+   /**
+   * Search for a particular piece of data in a linked list.
+   * @param head
+   *   the head reference for a linked list (which may be an empty list in
+   *   which case the head is null)
+   * @param target
+   *   a piece of data to search for
+   * @return
+   *   The return value is a reference to the first node that contains the
+   *   specified target. If there is no such node, the null reference is 
+   *   returned.     
+   **/   
+   public Node listSearch(Node head, double target)
+   {
+      Node cursor;
+      
+      for (cursor = head; cursor != null; cursor = cursor.getLink())
+         if (target == cursor.getData())
+            return cursor;
+        
+      return null;
+   }
+
+   /**
+   * Modification method to remove the node after this node.
+   * @precondition
+   *   This node must not be the tail node of the list.
+   * @postcondition
+   *   The node after this node has been removed from the linked list.
+   *   If there were further nodes after that one, they are still
+   *   present on the list.
+   * @exception NullPointerException
+   *   Indicates that this was the tail node of the list, so there is nothing
+   *   after it to remove.
+   **/
+   public void removeNodeAfter(Node node)   
+   {
+      node.setLink(node.getLink().getLink());
+   }  
 }

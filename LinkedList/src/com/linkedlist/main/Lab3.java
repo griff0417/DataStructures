@@ -9,8 +9,8 @@ import java.io.FileNotFoundException;
  * @author Ryan Hochmuth & Jason Griffith
  * 
  * Description:
- * 	Lab2 is the driver class to run SequenceTest and 
- *  use DoubleArraySeq.  It takes input through a text
+ * 	Lab3 is the driver class to run SequenceTest and 
+ *  use DoubleLinkedSeq.  It takes input through a text
  *  file and sends the data to SequenceTest.menu()
  *
  */
