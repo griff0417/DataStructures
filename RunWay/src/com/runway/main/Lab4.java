@@ -1,5 +1,10 @@
 package com.runway.main;
 
+/**
+ * Lab 4 is the main driver class for the runway program.
+ * @author Ryan Hochmuth & Jason Griffith
+ *
+ */
 public class Lab4 
 {
 	/**

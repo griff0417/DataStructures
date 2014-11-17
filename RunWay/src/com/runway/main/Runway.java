@@ -1,5 +1,13 @@
 package com.runway.main;
 
+/**
+ * The runway class simulates an airport runway.  It
+ * handles planes waiting to take off and land in
+ * separate queues.
+ * 
+ * @author Jason Griffith & Ryan Hochmuth
+ *
+ */
 public class Runway
 {
 	private int timeForLanding;
@@ -18,11 +26,20 @@ public class Runway
 		operation = 'I';
 	}
 	
+	/**
+	 * Is the runway currently busy.
+	 * ie. Is there a plane currently landing
+	 * or taking off.
+	 * @return boolean
+	 */
 	public boolean isBusy() 
 	{
 		return false;
 	}
 	
+	/**
+	 * Reduce the time remaining in the simulation.
+	 */
 	public void reduceRemainingTime()
 	{
 		
