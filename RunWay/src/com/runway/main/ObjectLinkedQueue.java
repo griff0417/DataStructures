@@ -51,20 +51,18 @@ public class ObjectLinkedQueue implements Cloneable
    Node front;
    Node rear;
 
-
    /**
    * Initialize an empty queue.
    * @param - none
    * <dt><b>Postcondition:</b><dd>
    *   This queue is empty.
    **/   
-   public ObjectLinkedQueue( )
+   public ObjectLinkedQueue()
    {
       front = null;
       rear = null;
    }
 
-   
    /**
    * Generate a copy of this queue.
    * @param - none

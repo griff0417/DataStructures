@@ -50,9 +50,8 @@ public class BooleanSource
    *   with the probability of a <CODE>true</CODE> value being determined
    *   by the argument that was given to the constructor.
    **/   
-   public boolean query( )
+   public boolean query()
    {
-      return (Math.random( ) < probability);
+      return (Math.random() < probability);
    }
- 
 }

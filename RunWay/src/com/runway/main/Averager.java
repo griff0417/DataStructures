@@ -31,7 +31,7 @@ public class Averager
    **/
    public Averager( )
    {
-       count =0;
+       count = 0;
        sum = 0;
    }
 
