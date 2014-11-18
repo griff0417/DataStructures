@@ -71,4 +71,6 @@ public class Runway
 		return operation;
 		 
 	}
+	
+	public static void simulateRunway(int runtime, double probTakeoff, double probLanding,)
 }
