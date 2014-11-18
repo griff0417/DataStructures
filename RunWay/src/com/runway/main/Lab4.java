@@ -8,11 +8,13 @@ package com.runway.main;
 
 public class Lab4 
 {
-	private static final int runtime = 1800;
-	private static final double probTakeoff = .07;
-	private static final double probLanding = .05;
-	private static final int timeForTakeoff = 120;
-	private static final int timeForLanding = 180;
+	// Simulation constants in minutes
+	private static final int RUNTIME = 30;
+	private static final double PROB_TAKEOFF = 7;
+	private static final double PROB_LANDING = 5;
+	private static final int TIME_FOR_TAKEOFF = 2;
+	private static final int TIME_FOR_LANDING = 3;
+	private static final int MAX_TIME_IN_DA_AIR = 1;
 
 	/**
 	 * The main method to start the program.
@@ -20,6 +22,11 @@ public class Lab4
 	 */
 	public static void main(String[] args) 
 	{
-		Runway.simulateRunway(runtime, probTakeoff, probLanding,timeForTakeoff,timeForLanding);
+		Runway.simulateRunway(RUNTIME, 
+				(double)PROB_TAKEOFF / (double)RUNTIME, 
+				(double)PROB_LANDING / (double)RUNTIME,
+				TIME_FOR_TAKEOFF,
+				TIME_FOR_LANDING,
+				MAX_TIME_IN_DA_AIR);
 	}
 }
