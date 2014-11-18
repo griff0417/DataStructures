@@ -19,7 +19,7 @@ public class Plane
 												// is doing 'L' is  for landing 'T' 
 												// is for taking off 
 	
-	private static int planeNo;	                // Plane number
+	private int planeNo;	                // Plane number
 	
 	// Operation  is the type of operation the plane is doing. 
 	// If landingOrTakeOff is 'L' it means the plane is landing, 
@@ -45,7 +45,7 @@ public class Plane
 	 * Get the number of this plane.
 	 * @return planeNo
 	 */
-	public static int getPlaneNo() 
+	public int getPlaneNo() 
 	{ 
 		return planeNo;
 	}

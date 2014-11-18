@@ -144,8 +144,8 @@ public class ObjectLinkedQueue implements Cloneable
    {
        if (isEmpty( ))
        {  // Insert first item.
-	  front = new Node(item, null);
-	  rear = front;
+    	   front = new Node(item, null);
+    	   rear = front;
        }
        else
        {  // Insert an item that is not the first.
