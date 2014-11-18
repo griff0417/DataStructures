@@ -65,6 +65,8 @@ public class Runway
 		}
 		else
 		{
+			operation = typeOfUse;
+			
 			switch (typeOfUse)
 			{
 				case 'T':
@@ -107,9 +109,9 @@ public class Runway
 		BooleanSource boolTakeoff = new BooleanSource(probTakeoff);
 		BooleanSource boolLanding = new BooleanSource(probLanding);
 		Runway runway = new Runway(timeForTakeoff , timeForLanding);
-		Plane currentPlane;
-		Plane newTakeoff;
-		Plane newLanding;
+		Plane currentPlane = null;
+		Plane newTakeoff = null;
+		Plane newLanding = null;
 		Averager avgTakeoff = new Averager();
 		Averager avgLanding = new Averager();
 		Averager avgNewTakeoff = new Averager();
@@ -134,10 +136,6 @@ public class Runway
 		
 		for (currentSecond = 0; currentSecond < runtime; currentSecond++)
 		{
-			currentPlane = null;
-			newTakeoff = null;
-			newLanding = null;
-			
 			if ((currentSecond % 60) == 0)
 			{
 				currentMin++;
@@ -244,6 +242,9 @@ public class Runway
 				}
 				
 				descString += "\n\n";
+				
+				newTakeoff = null;
+				newLanding = null;
 			}
 			
 			runway.reduceRemainingTime();
