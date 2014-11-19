@@ -172,7 +172,7 @@ public class Runway
 			
 			if (boolLanding.query()) // If a plane arrives to land
 			{
-				newLanding = new Plane (currentSecond, 'L');
+				newLanding = new Plane(currentSecond, 'L');
 				landingQ.insert(newLanding); // Add the new plane to the queue
 				
 				avgNewLanding.addNumber(currentSecond - lastArrivedLanding);
@@ -244,10 +244,10 @@ public class Runway
 			runway.reduceRemainingTime();
 		}
 		
-		// After the simulation, print the remaining information
+		// After the simulation, print the remaining information // (int)(probTakeoff * 10)
 		System.out.println("The average amount of time between arrival of planes to the takeoff queue is: " 
 				+ (int)(avgNewTakeoff.average()) + " minutes.");
-		System.out.println("The average amount of time between arrival of panes to the landing queue is: " 
+		System.out.println("The average amount of time between arrival of planes to the landing queue is: " 
 				+ (int)(avgNewLanding.average()) + " minutes.");
 		System.out.println("The average time a plane spent on the takeoff queue is: "
 				+ (int)(avgTakeoff.average()) + " minutes.");

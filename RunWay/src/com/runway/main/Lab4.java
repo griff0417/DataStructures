@@ -23,10 +23,20 @@ public class Lab4
 	public static void main(String[] args) 
 	{
 		Runway.simulateRunway(RUNTIME, 
-				(double)PROB_TAKEOFF / (double)RUNTIME, 
-				(double)PROB_LANDING / (double)RUNTIME,
+				(double)PROB_TAKEOFF / RUNTIME, 
+				(double)PROB_LANDING / RUNTIME,
 				TIME_FOR_TAKEOFF,
 				TIME_FOR_LANDING,
 				MAX_TIME_IN_DA_AIR);
+		
+		// Expression Tree:
+		/* ((2 + 3) * 8)
+		 * 
+		 * 		   (*)
+		 *         / \
+		 *       (+)  (8)
+		 *       / \
+		 *     (2)  (3)
+		 */
 	}
 }
