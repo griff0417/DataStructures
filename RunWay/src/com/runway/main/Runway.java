@@ -119,6 +119,7 @@ public class Runway
 		ObjectLinkedQueue takeoffQ = new ObjectLinkedQueue();
 		ObjectLinkedQueue landingQ = new ObjectLinkedQueue();
 		ObjectLinkedStack crashStack = new ObjectLinkedStack();
+		ObjectLinkedStack crashStackTimes = new ObjectLinkedStack();
 		
 		// Boolean generators to determine plane arrivals
 		BooleanSource boolTakeoff = new BooleanSource(probTakeoff);
@@ -139,7 +140,7 @@ public class Runway
 									// arrived to takeoff
 		int lastArrivedLanding = 0; // The second the last plane 
 									// arrived to land
-		int currentSecond = 0;		// The exact second that the simulator is on
+		int currentMinute = 0;		// The exact second that the simulator is on
 		int currentMin = 0;			// The exact minute that the simulator is on
 		int next;					// Used to track time in a queue
 		int takeoffCount = 0;		// The total number of planes that took off
@@ -159,24 +160,24 @@ public class Runway
 		System.out.println("");
 		
 		// Loop to simulate the entire runtime one second at a time
-		for (currentSecond = 0; currentSecond < runtime; currentSecond++)
+		for (currentMinute = 0; currentMinute < runtime; currentMinute++)
 		{
 			if (boolTakeoff.query()) // If a plane arrives to takeoff
 			{
-				newTakeoff = new Plane(currentSecond, 'T');
+				newTakeoff = new Plane(currentMinute, 'T');
 				takeoffQ.insert(newTakeoff); // Add the new plane to the queue
 				
-				avgNewTakeoff.addNumber(currentSecond - lastArrivedTakeoff);
-				lastArrivedTakeoff = currentSecond;
+				avgNewTakeoff.addNumber(currentMinute - lastArrivedTakeoff);
+				lastArrivedTakeoff = currentMinute;
 			}
 			
 			if (boolLanding.query()) // If a plane arrives to land
 			{
-				newLanding = new Plane(currentSecond, 'L');
+				newLanding = new Plane(currentMinute, 'L');
 				landingQ.insert(newLanding); // Add the new plane to the queue
 				
-				avgNewLanding.addNumber(currentSecond - lastArrivedLanding);
-				lastArrivedLanding = currentSecond;
+				avgNewLanding.addNumber(currentMinute - lastArrivedLanding);
+				lastArrivedLanding = currentMinute;
 			}
 			
 			// Check to see if the runway isn't busy, and either the takeoff
@@ -189,7 +190,7 @@ public class Runway
 				{
 					currentPlane = (Plane)takeoffQ.getFront();
 					next = currentPlane.getTime();
-					avgTakeoff.addNumber(currentSecond - next);
+					avgTakeoff.addNumber(currentMinute - next);
 					
 					runway.startUsingRunway('T');
 					takeoffCount++;
@@ -201,36 +202,27 @@ public class Runway
 					currentPlane = (Plane)landingQ.getFront();
 					next = currentPlane.getTime();
 					
-					// If the next landing plane isn't out of fuel,
+					// If the current plane isn't out of fuel,
 					// let it land.
-					if ((currentSecond - next) <= maxTimeInDaAir)
+					if ((currentMinute - next) <= maxTimeInDaAir)
 					{
 						runway.startUsingRunway('L');
-						avgLanding.addNumber(currentSecond - next);
+						avgLanding.addNumber(currentMinute - next);
 						landCount++;
 					}
-					// If the next plane has been in the air too long,
+					// If the current plane has been in the air too long,
 					// it has crashed.
 					else
 					{
-						crashStack.push(new Plane(currentSecond, currentPlane.getOperation()));
-						
-						// After the plane has crashed,
-						// check if another is available to land.
-						if(!landingQ.isEmpty())
-			            {
-							currentPlane = (Plane)landingQ.getFront();
-							next = currentPlane.getTime();
-							runway.startUsingRunway('L');
-							avgLanding.addNumber(currentSecond - next);
-							landCount++;
-			            }
+						crashStack.push(currentPlane);
+						crashStackTimes.push(currentMinute);
+						currentPlane = null;
 					}
 				}
 			}
 			// Check to see if the runway isn't busy and both queues are empty.
 			// If so, the runway is idle.
-			else if (!runway.isBusy() && takeoffQ.isEmpty() &&  landingQ.isEmpty())
+			else if (!runway.isBusy() && takeoffQ.isEmpty() && landingQ.isEmpty())
 				runway.startUsingRunway('I');
 			
 			currentMin++;
@@ -264,7 +256,7 @@ public class Runway
 		System.out.println("Number of planes that crashed: " + crashStack.size());
 		System.out.println("");
 		
-		printCrashedPlanes(runway, crashStack);
+		printCrashedPlanes(runway, crashStack, crashStackTimes);
 		
 		// Output the minute by minute breakdown
 		System.out.println(runway.descString);
@@ -288,8 +280,10 @@ public class Runway
 		+= "\tArrived for Takeoff: ";
 		
 		if (newTakeoff != null)
+		{
 			runway.descString
 			+= "Plane #" + newTakeoff.getPlaneNo();
+		}
 		else
 			runway.descString
 			+= "None";
@@ -300,34 +294,54 @@ public class Runway
 		+= "\tArrived for Landing: ";
 		
 		if (newLanding != null)
+		{
 			runway.descString
 			+= "Plane #" + newLanding.getPlaneNo();
+		}
 		else
 			runway.descString
 			+= "None";
 		
 		runway.descString += "\n";
 		
-		switch(runway.kindOfOperation())
+		if (currentPlane != null)
 		{
-			case 'T':
-				runway.descString
-				+= "\tRunway: "
-				+ "Plane #" + currentPlane.getPlaneNo()
-				+ " is taking off.";
-				break;
-				
-			case 'L':
-				runway.descString
-				+= "\tRunway: "
-				+ "Plane #" + currentPlane.getPlaneNo()
-				+ " is landing.";
-				break;
-				
-			case 'I':
-				runway.descString
-				+= "\tRunway: Idle";
-				break;
+			switch(runway.kindOfOperation())
+			{
+				case 'T':
+					runway.descString
+					+= "\tRunway: "
+					+ "Plane #" + currentPlane.getPlaneNo()
+					+ " is taking off.";
+					
+					if (runway.runwayTimeLeft == runway.timeForTakeoff)
+						runway.descString
+						+= " (Started)";
+					else if (runway.runwayTimeLeft == 1)
+						runway.descString
+						+= " (Finished)";
+					
+					break;
+					
+				case 'L':
+					runway.descString
+					+= "\tRunway: "
+					+ "Plane #" + currentPlane.getPlaneNo()
+					+ " is landing.";
+					
+					if (runway.runwayTimeLeft == runway.timeForLanding)
+						runway.descString
+						+= " (Started)";
+					else if (runway.runwayTimeLeft == 1)
+						runway.descString
+						+= " (Finished)";
+					break;
+					
+				case 'I':
+					runway.descString
+					+= "\tRunway: Idle";
+					break;
+			}
 		}
 		
 		runway.descString += "\n\n";
@@ -338,22 +352,32 @@ public class Runway
 	 * @param runway
 	 * @param crashStack
 	 */
-	public static void printCrashedPlanes(Runway runway, ObjectLinkedStack crashStack)
+	public static void printCrashedPlanes(Runway runway, ObjectLinkedStack stack, ObjectLinkedStack stackTimes)
 	{
-		if (!crashStack.isEmpty()) // If planes crashed during the simulation
+		if (!stack.isEmpty()) // If planes crashed during the simulation
 		{
+			// Create a new stack that is the initial crash stack backwards
+			ObjectLinkedStack crashStack = new ObjectLinkedStack();
+			ObjectLinkedStack crashStackTimes = new ObjectLinkedStack();
+			for (int x = 0; x < stack.size(); x++)
+			{
+				crashStack.push(stack.pop());
+				crashStackTimes.push(stackTimes.pop());
+			}
+			
 			runway.descString
 			+= "Crashed Planes: \n";
 			
 			// Iterate through every crashed plane
-			for(int x = crashStack.size(); x > 0; x--)
+			for(int x = 0; x < crashStack.size(); x++)
 			{
 				Plane plane = (Plane)crashStack.pop();
+				int crashTime = (Integer)crashStackTimes.pop();
 				
 				runway.descString
 				+= "Plane #" + plane.getPlaneNo()
 				+ " crashed at minute "
-				+ plane.getTime() + "\n";
+				+ crashTime + "\n";
 			}
 		}
 		else // If no planes crashed during the simulation
