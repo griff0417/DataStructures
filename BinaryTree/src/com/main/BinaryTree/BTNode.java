@@ -1,13 +1,7 @@
 package com.main.BinaryTree;
 
-// File: BTNode.java from the package edu.colorado.nodes
-// Complete documentation is available from the BTNode link in:
-//   http://www.cs.colorado.edu/~main/docs/
-
-//package edu.colorado.nodes;
-
 /******************************************************************************
-* A <CODE>BTNode&lt;<E&gt;</CODE> provides a node for a binary tree. Each node 
+* A BTNode provides a node for a binary tree. Each node 
 * contains a piece of data (which is a reference to an E object) and references
 * to a left and right child. The references to children may be null to indicate
 * that there is no child. The reference stored in a node can also be null.
@@ -58,7 +52,6 @@ public class BTNode<E>
       right = initialRight;
    }       
    
-   
    /**
    * Accessor method to get the data from this node.   
    * @param - none
@@ -69,7 +62,6 @@ public class BTNode<E>
    {
       return data;
    }
-   
    
    /**
    * Accessor method to get a reference to the left child of this node. 
@@ -82,7 +74,6 @@ public class BTNode<E>
    {
       return left;                                               
    } 
-   
    
    /**
    * Accessor method to get the data from the leftmost node of the tree below 
@@ -100,7 +91,6 @@ public class BTNode<E>
          return left.getLeftmostData( );
    }
       
-   
    /**
    * Accessor method to get a reference to the right child of this node. 
    * @param - none
@@ -112,8 +102,7 @@ public class BTNode<E>
    {
       return right;                                               
    } 
-
-
+   
    /**
    * Accessor method to get the data from the rightmost node of the tree below 
    * this node.
@@ -129,7 +118,6 @@ public class BTNode<E>
       else
          return right.getRightmostData( );
    }
-   
    
    /**
    * Uses an inorder traversal to print the data from each node at or below
@@ -148,7 +136,6 @@ public class BTNode<E>
          right.inorderPrint( );
    }  
 
-   
    /**
    * Accessor method to determine whether a node is a leaf. 
    * @param - none
@@ -160,7 +147,6 @@ public class BTNode<E>
    {
       return (left == null) && (right == null);                                               
    } 
-
 
    /**
    * Uses a preorder traversal to print the data from each node at or below
@@ -178,8 +164,7 @@ public class BTNode<E>
       if (right != null)
          right.preorderPrint( );
    } 
-   
-      
+    
    /**
    * Uses a postorder traversal to print the data from each node at or below
    * this node of the binary tree.
@@ -196,7 +181,6 @@ public class BTNode<E>
          right.postorderPrint( );
       System.out.println(data);
    }   
-
 
    /**
    * Uses an inorder traversal to print the data from each node at or below
@@ -244,7 +228,6 @@ public class BTNode<E>
       }
    }
    
-
    /**
    * Remove the leftmost most node of the tree with this node as its root.
    * @param - none
@@ -265,7 +248,6 @@ public class BTNode<E>
          return this;
       }
    }
-
 
    /**
    * Remove the rightmost most node of the tree with this node as its root.
@@ -300,7 +282,6 @@ public class BTNode<E>
       data = newData;
    }                                                               
    
-   
    /**
    * Modification method to set the link to the left child of this node.
    * @param <CODE>newLeft</CODE>
@@ -316,7 +297,6 @@ public class BTNode<E>
       left = newLeft;
    }
     
-    
    /**
    * Modification method to set the link to the right child of this node.
    * @param <CODE>newLeft</CODE>
@@ -331,7 +311,6 @@ public class BTNode<E>
    {                    
       right = newRight;
    }  
-    
     
    /**
    * Copy a binary tree.
@@ -358,7 +337,6 @@ public class BTNode<E>
       }
    }
    
-
    /**
    * Count the number of nodes in a binary tree.
    * @param <CODE>root</CODE>
@@ -377,6 +355,4 @@ public class BTNode<E>
       else
          return 1 + treeSize(root.left) + treeSize(root.right);
    }   
-
 }
-           

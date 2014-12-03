@@ -2,56 +2,75 @@ package com.main.BinaryTree;
 
 import java.io.PrintWriter;
 
-public class TreeBag
+/**
+ * A TreeBag is a binary tree data structure.
+ * This tree can store any data type that is comparable.
+ * 
+ * @author Ryan Hochmuth & Jason Griffith
+ *
+ */
+public class TreeBag implements Cloneable
 {
-   private BTNode root;
+   private BTNode root; // The top node in the tree
    
-   //Adds a new object to the tree sorted by their object id
-   //if the object number is already stored in the tree then that object
-   //is overwriten
-   //@Post-Condition
-   //    a new object has been added to the tree
-   //    at the next available place while maintaining order
-   //    of object id.
+   /**
+    * Add a new object to the tree.  If the object given
+    * is the same as an object already in the tree,
+    * overwrite the existing one.
+    * @param x - the object to add
+    */
    public void add(Comparable x)  
    {
       root = addNode (x,root);
    }
 
-   
+   /**
+    * Handles the adding of a new object,
+    * by adding it as a new node and
+    * adding it to the tree recursively.
+    * @param x - the object to add
+    * @param p - the "head" node of the
+    * 			 current branch being checked
+    * @return p - the "head" node of the
+    * 			  current branch being checked
+    */
    private BTNode addNode(Comparable x, BTNode p)
    {
+	  // There is no current "head"
       if (p == null)
-         //create the node  - base case
-         p = new BTNode(x,null,null);
-      else if (x.compareTo(p.getData())<0)
-         p.setLeft(addNode(x,p.getLeft()));
-      else if(x.compareTo(p.getData())>0)  
-         p.setRight(addNode(x,p.getRight()));
-      else // keys are equal - replace with new data
-         p.setData(x);
+         p = new BTNode(x, null, null); // Create the node - base case
+      
+      // The new object is less than the current "head"
+      else if (x.compareTo(p.getData()) < 0)
+         p.setLeft(addNode(x, p.getLeft())); // Traverse to the next left branch
+      
+      // The new object is greater than the current "head"
+      else if(x.compareTo(p.getData()) > 0)  
+         p.setRight(addNode(x, p.getRight())); // Traverse to the next right branch
+      
+      else // The new object is equal to the current "head"
+         p.setData(x); // Update the existing object
+      
       return p;
    }
 
-   
-   //Removes an object from the tree and then shifts any data
-   //to fill any gaps while maintaining the trees status as a 
-   //bianary search tree
-   //If the object was not found the tree remains the same
-   //@Precondition
-   //    The tree must be a bianary search tree
-   //@Postcondition
-   //    If the object was found it has been removed 
-   //@Return
-   //    True - the object was found
-   //    False - the object was not found  
+   /**
+    * Removes an object from the tree and then shifts any data
+    * to fill any gaps while maintaining the trees status as a 
+    * Binary search tree.
+    * If the object was not found the tree remains the same.
+    * @param target - the object to remove
+    * @Return
+    * 	True - the object was found
+    * 	False - the object was not found
+    */
    public boolean remove(Comparable target)
    { 
       boolean answer = false;
    
-      Object obj = retrieve(target, root);
+      Object obj = retrieve(target, root); // Find the given object
       
-      if(obj != null)
+      if(obj != null) // If the object was found, remove it
       {
          root = removeNode(root, target);
          answer = true;
@@ -60,68 +79,97 @@ public class TreeBag
       return answer;
    }
 
+   /**
+    * Handles the removal of a node in the tree.
+    * @param p - the "head" node of the
+    * 			 current branch being checked
+    * @param target - the object to remove
+    * @return - the "head" node of the
+    * 			current branch being checked
+    */
    private BTNode removeNode(BTNode p, Comparable target)
    {  
-      if(p == null)  // tree is empty, target is not found 
+      if(p == null)  // The tree is empty / the target is not found 
          return p;
       
-      int answer = target.compareTo(p.getData());
+      int answer = target.compareTo(p.getData()); // Compare the object to remove 
+      											  // to the current "head"
       
-   		if(answer == -1) 
-  	      p.setLeft( removeNode( p.getLeft(), target));
-  	   else if(answer == 1)
-         p.setRight( removeNode(p.getRight(), target));
-          
-         //found the node to be removed
-
-         //if the node has two children 
+      if(answer == -1) // If the object to remove is < the current "head"
+  	      p.setLeft(removeNode(p.getLeft(), target));
+      
+  	  else if(answer == 1) // If the object to remove is > the current "head"
+  		  p.setRight(removeNode(p.getRight(), target));
+      
+      // If the node has two children 
       else if((p.getLeft() != null) && (p.getRight() != null)) 
-   	{      
- 		   // get the data in the right most node in the left subtree 
-         p.setData(p.getLeft().getRightmostData());
-        	// delete the right most data in the left subtree
-         p.setLeft(p.getLeft().removeRightmost() );
-  	   }
-
+   	  {      
+    	  // Get the data in the right most node in the left subtree 
+    	  p.setData(p.getLeft().getRightmostData());
+    	  // Delete the right most data in the left subtree
+    	  p.setLeft(p.getLeft().removeRightmost() );
+  	  }
+      
       else if (p.getLeft() ==null)           
-      //only right child
-         p = p.getRight();
+         p = p.getRight(); // Only right child
+      
       else                                              
-      // only left child 
-		   p = p.getLeft();
+		 p = p.getLeft(); // Only left child 
+      
       return p;  
    }
    
-   //Retrieve's the object being searched for.
-   //The object given in the parameter only needs the information to compare
-   //@Return
-   //    if found the object being searched for is returned
-   //    if not found the return is null
+   /**
+    * Retrieve's the object being searched for.
+    * The object given in the parameter only needs 
+    * the information to compare.
+    * @param obj - the object to retrieve
+    * @param aNode - the "head" node of the
+    * 			     current branch being checked
+    * @return
+    * 	null if the object wasn't found.
+    * 	the object if it was found.
+    */
    public Object retrieve(Comparable obj, BTNode aNode)
    {
       Comparable answer = null;
       
+      // The node to retrieve = the current "head"
       if(obj.compareTo(aNode.getData()) == 0)
          answer = (Comparable)aNode.getData();
-      else if(obj.compareTo(aNode.getData())>0 && !aNode.isLeaf())
+      
+   	  // The node to retrieve > current "head"
+      else if(obj.compareTo(aNode.getData()) > 0 && !aNode.isLeaf())
          answer = (Comparable)retrieve(obj, aNode.getRight());
-      else if(obj.compareTo(aNode.getData())<0 && !aNode.isLeaf())
+      
+      // The node to retrieve < current "head"
+      else if(obj.compareTo(aNode.getData()) < 0 && !aNode.isLeaf())
          answer = (Comparable)retrieve(obj, aNode.getLeft());
       
       return answer; 
    }
    
-   // Display all the objects in the tree
+   /**
+    * Display all of the objects in
+    * this tree in ascending order.
+    * @param aNode - the root node of the tree
+    * @param pw - the print writer to display to
+    */
    public void display(BTNode aNode, PrintWriter pw)
    {
       if(aNode.getLeft() != null)
          display(aNode.getLeft(), pw);
+      
       pw.println(aNode.getData().toString());
+      
       if(aNode.getRight() != null)
          display(aNode.getRight(), pw); 
    }
    
-   //method to return the root of the tree
+   /**
+    * Get the root node of this tree.
+    * @return root
+    */
    public BTNode getRoot()
    {
       return root;

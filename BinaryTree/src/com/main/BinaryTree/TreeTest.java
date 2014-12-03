@@ -1,58 +1,41 @@
 package com.main.BinaryTree;
 
+/**
+ * TreeTest is the driver class for this program. 
+ * It handles the calls to the company menu.
+ * 
+ * @author Jason Griffith & Ryan Hochmuth
+ *
+ */
 public class TreeTest
 {
-  public static void main (String[] args)
-  {
-      Company company = new Company();
-      
-      System.out.println ("create the tree from an input file Employee.txt");
-      System.out.println ("-----------------");
-      
-      company.menu("1 - Employee.txt");
-      
-      System.out.println ();
-      System.out.println ("----------------------------------------------------------------------------");
-      System.out.println ("add an employee to the tree");
-      System.out.println ("---------------------------------");
-      
-      company.menu("2 - 5290 George  Truman      	16110.68");
-      
-      System.out.println ();
-      System.out.println ("----------------------------------------------------------------------------");
-      System.out.println ("remove an employee from the tree");
-      System.out.println ("---------------------------------------");
-      
-      company.menu("3 - 4892");
-      
-      System.out.println ();
-      System.out.println ("----------------------------------------------------------------------------");
-      System.out.println ();
-      System.out.println ("retrieve an employee from the tree and print the employee record");
-      System.out.println ("-------------------------------------------------------------------------------");
-      
-      company.menu("4 - 3924");
-      
-      System.out.println ();
-      System.out.println ("----------------------------------------------------------------------------");
-      System.out.println ();
-      System.out.println ("update an employee from the tree and print the new ");
-      System.out.println ("---------------------------------------------------------------");
-      
-      company.menu("5 - 3924 20000.00");
-      
-      System.out.println ();
-      System.out.println ("----------------------------------------------------------------------------");
-      System.out.println ();
-      System.out.println ("display the tree ");
-      System.out.println ("--------------------");
-      
-      company.menu("6");
-      
-      System.out.println ("----------------------------------------------------------------------------");
-      System.out.println ();
-      System.out.println ();
-      
-      company.menu("7");
-    }
+	/**
+	 * Start the program.
+	 * @param args
+	 */
+	public static void main(String[] args)
+	{
+		Company company = new Company(); // The company to work with
+
+		// Create a new tree from a text file
+		company.menu("1 - Employee.txt");
+		
+		// Add a new employee
+		company.menu("2 - 5290 George  Truman      	16110.68");
+
+		// Remove an employee
+		company.menu("3 - 4892");
+
+		// Retrieve an employee and print it's record
+		company.menu("4 - 3924");
+
+		// Update an employee record
+		company.menu("5 - 3924 20000.00");
+
+		// Print the entire tree
+		company.menu("6");
+
+		// Exit the program
+		company.menu("7");
+	}
 }
