@@ -359,7 +359,9 @@ public class Runway
 			// Create a new stack that is the initial crash stack backwards
 			ObjectLinkedStack crashStack = new ObjectLinkedStack();
 			ObjectLinkedStack crashStackTimes = new ObjectLinkedStack();
-			for (int x = 0; x < stack.size(); x++)
+			int size = stack.size();
+			
+			for (int x = 0; x < size; x++)
 			{
 				crashStack.push(stack.pop());
 				crashStackTimes.push(stackTimes.pop());
@@ -369,7 +371,8 @@ public class Runway
 			+= "Crashed Planes: \n";
 			
 			// Iterate through every crashed plane
-			for(int x = 0; x < crashStack.size(); x++)
+			size = crashStack.size();
+			for(int x = 0; x < size; x++)
 			{
 				Plane plane = (Plane)crashStack.pop();
 				int crashTime = (Integer)crashStackTimes.pop();
