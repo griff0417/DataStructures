@@ -27,12 +27,15 @@ public class Company
 		// Remove spaces, commas, and hyphens from the input line
 		String[] tokens = inputString.split("[\\s\\,\\-]+"); 
 		
+		Employee emp = null;
+		
 		switch (Integer.parseInt(tokens[0]))
 		{
 			case 1: // Read from file
 				System.out.println
 				("----------------------------------------------------------------------------");
 				System.out.println("Create a binary tree from an input file.");
+				System.out.println("Input line: " + inputString);
 				System.out.println
 				("----------------------------------------------------------------------------");
 				
@@ -71,6 +74,7 @@ public class Company
 				System.out.println
 				("----------------------------------------------------------------------------");
 				System.out.println("Add a new employee to the tree.");
+				System.out.println("Input line: " + inputString);
 				System.out.println
 				("----------------------------------------------------------------------------");
 				
@@ -80,6 +84,15 @@ public class Company
 						tokens[3],
 						Double.parseDouble(tokens[4])));
 				
+				emp = (Employee)bt.retrieve(
+						new Employee(Integer.parseInt(tokens[1])),
+						bt.getRoot());
+				
+				if (emp != null)
+				{
+					System.out.println(emp.toString());
+				}
+				
 				System.out.println("");
 				break;
 				
@@ -87,10 +100,20 @@ public class Company
 				System.out.println
 				("----------------------------------------------------------------------------");
 				System.out.println("Remove an employee from the tree.");
+				System.out.println("Input line: " + inputString);
 				System.out.println
 				("----------------------------------------------------------------------------");
 				
+				emp = (Employee)bt.retrieve(
+						new Employee(Integer.parseInt(tokens[1])),
+						bt.getRoot());
+				
 				bt.remove(new Employee(Integer.parseInt(tokens[1])));
+				
+				if (emp != null)
+				{
+					System.out.println(emp.toString());
+				}
 				
 				System.out.println("");
 				break;
@@ -99,10 +122,11 @@ public class Company
 				System.out.println
 				("----------------------------------------------------------------------------");
 				System.out.println("Retrieve an employee from the tree and print the employee record.");
+				System.out.println("Input line: " + inputString);
 				System.out.println
 				("----------------------------------------------------------------------------");
 				
-				Employee emp = (Employee)bt.retrieve(
+				emp = (Employee)bt.retrieve(
 						new Employee(Integer.parseInt(tokens[1])),
 						bt.getRoot());
 				
@@ -121,6 +145,7 @@ public class Company
 				System.out.println
 				("----------------------------------------------------------------------------");
 				System.out.println("Update an employee and print the new record.");
+				System.out.println("Input line: " + inputString);
 				System.out.println
 				("----------------------------------------------------------------------------");
 				
@@ -145,6 +170,7 @@ public class Company
 				System.out.println
 				("----------------------------------------------------------------------------");
 				System.out.println("Display the entire tree.");
+				System.out.println("Input line: " + inputString);
 				System.out.println
 				("----------------------------------------------------------------------------");
 				
